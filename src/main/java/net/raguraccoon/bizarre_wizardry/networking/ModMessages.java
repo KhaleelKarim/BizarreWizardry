@@ -7,6 +7,9 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
+import net.raguraccoon.bizarre_wizardry.networking.packet.ChooseClassC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.SetClassSyncS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.SwitchSpellC2SPacket;
 
 public class ModMessages {
     private static SimpleChannel INSTANCE;
@@ -26,12 +29,23 @@ public class ModMessages {
 
         INSTANCE = net;
 
-//        net.messageBuilder(ExampleC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-//                .decoder(ExampleC2SPacket::new)
-//                .encoder(ExampleC2SPacket::toBytes)
-//                .consumerMainThread(ExampleC2SPacket::handle)
-//                .add();
+        net.messageBuilder(SwitchSpellC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SwitchSpellC2SPacket::new)
+                .encoder(SwitchSpellC2SPacket::encode)
+                .consumerMainThread(SwitchSpellC2SPacket::handle)
+                .add();
 
+        net.messageBuilder(ChooseClassC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ChooseClassC2SPacket::new)
+                .encoder(ChooseClassC2SPacket::encode)
+                .consumerMainThread(ChooseClassC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(SetClassSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SetClassSyncS2CPacket::new)
+                .encoder(SetClassSyncS2CPacket::encode)
+                .consumerMainThread(SetClassSyncS2CPacket::handle)
+                .add();
     }
 
 
