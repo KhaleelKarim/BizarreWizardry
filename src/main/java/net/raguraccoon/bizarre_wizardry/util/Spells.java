@@ -15,9 +15,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Spells {
 
-    public static String[] spells = {"Magician's Red", "Rhino Stomp", "Bloodletting", "Overgrowth"};
+    public static String[] spellsLibrary = {"Magician's Red", "Rhino Stomp", "Bloodletting", "Overgrowth"};
+    public static String[] availableSpells = new String[spellsLibrary.length];
+    public static String[] currentSpells = new String[spellsLibrary.length];
 
     public static void burn(UseOnContext context) {
 

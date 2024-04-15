@@ -40,6 +40,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
             event.register(KeyBinding.SWITCH_SPELL_KEY);
+            event.register(KeyBinding.DEBUG_KEY);
         }
 
         @SubscribeEvent

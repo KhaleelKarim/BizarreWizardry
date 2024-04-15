@@ -1,34 +1,39 @@
 package net.raguraccoon.bizarre_wizardry.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 
 import java.util.function.Supplier;
 
-public class SetClassSyncS2CPacket {
+public class GetAvailableSpellsS2CPacket {
 
-    int magicalClass;
+    int[] availableSpells;
 
-    public SetClassSyncS2CPacket(int magicalClass) {
-        this.magicalClass = magicalClass;
+    public GetAvailableSpellsS2CPacket(int[] availableSpells) {
+        this.availableSpells = availableSpells;
     }
 
-    public SetClassSyncS2CPacket(FriendlyByteBuf buf) {
-        this.magicalClass = buf.readInt();
+    //Decoding constructor
+    public GetAvailableSpellsS2CPacket(FriendlyByteBuf buf) {
+        availableSpells = buf.readVarIntArray();
     }
 
+    //Encoding method
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(magicalClass);
+        buf.writeVarIntArray(availableSpells);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             //Now on the client
-            ClientSpellData.setMagicalClass(this.magicalClass);
+            ClientSpellData.setAvailableSpells(this.availableSpells);
         });
+
+
         return true;
     }
+
 }

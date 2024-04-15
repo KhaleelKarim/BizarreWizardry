@@ -5,6 +5,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
+import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.item.ModItems;
 import net.raguraccoon.bizarre_wizardry.item.custom.WandItem;
 import net.raguraccoon.bizarre_wizardry.util.Spells;
@@ -51,7 +52,7 @@ public class SwitchSpellC2SPacket {
 
     //Helper method to handle the logic of switching from spell to spell
     public static int switchSpell(int spellNumber) {
-        if (spellNumber >= Spells.spells.length - 1) {
+        if (spellNumber >= ClientSpellData.getSpellCapacity() - 1) {
             spellNumber = 0;
         } else {
             ++spellNumber;

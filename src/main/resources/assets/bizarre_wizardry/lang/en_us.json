@@ -1,3 +1,15 @@
 {
-  "item.bizarre_wizardry.wand": "Wand"
+  "item.bizarre_wizardry.wand": "Wand",
+
+  "key.category.bizarre_wizardry.bizarre_category": "Bizarre Wizardry",
+  "key.bizarre_wizardry.switch_spell": "Switch Spell",
+  "key.bizarre_wizardry.debug": "Debug",
+
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen": "Overview",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.universal_button": "Spells",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.unique_button": "Unique",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.notoriety_button": "Notoriety",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.test_button": "Test",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.unlock_button": "Unlock",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.back_button": "Back"
 }

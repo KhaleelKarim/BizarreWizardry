@@ -10,6 +10,7 @@ import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.item.ModItems;
 
 public class SpellHudOverlay {
+
     public static final ResourceLocation BURN = new ResourceLocation(BizarreWizardry.MOD_ID,
             "textures/spell/fire_spell.png");
     public static final ResourceLocation RHINO_STOMP = new ResourceLocation(BizarreWizardry.MOD_ID,
@@ -20,6 +21,11 @@ public class SpellHudOverlay {
             "textures/spell/overgrowth_spell_1.png");
     public static final ResourceLocation NONE = new ResourceLocation(BizarreWizardry.MOD_ID,
             "textures/spell/none_spell.png");
+    public static final ResourceLocation EMPTY_SPELL = new ResourceLocation(BizarreWizardry.MOD_ID,
+            "textures/spell/no_spell.png");
+
+
+    public static final ResourceLocation[] spellPictures = {RHINO_STOMP, BURN, BLOODLETTING};
 
     public static IGuiOverlay HUD_SPELLS = ((forgeGui, guiGraphics, partialTick, width, height) -> {
         int x = width / 2;
@@ -40,18 +46,22 @@ public class SpellHudOverlay {
 
             CompoundTag tag = wand.getTag();
             int spellChoice = tag.getInt("bizarre_wizardry.spell_number");
+            int activeSpell = ClientSpellData.currentSpells[spellChoice];
 
-            switch(spellChoice) {
+            switch(activeSpell) {
                 case 0:
-                    guiGraphics.blit(BURN, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+                    guiGraphics.blit(EMPTY_SPELL, x - 135, y - 21,40, 20, 40, 20, 40, 20);
                     break;
                 case 1:
-                    guiGraphics.blit(RHINO_STOMP, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+                    guiGraphics.blit(BURN, x - 135, y - 21,40, 20, 40, 20, 40, 20);
                     break;
                 case 2:
-                    guiGraphics.blit(BLOODLETTING, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+                    guiGraphics.blit(RHINO_STOMP, x - 135, y - 21,40, 20, 40, 20, 40, 20);
                     break;
                 case 3:
+                    guiGraphics.blit(BLOODLETTING, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+                    break;
+                case 4:
                     guiGraphics.blit(OVERGROWTH, x - 135, y - 21,40, 20, 40, 20, 80, 40);
 
                 default:

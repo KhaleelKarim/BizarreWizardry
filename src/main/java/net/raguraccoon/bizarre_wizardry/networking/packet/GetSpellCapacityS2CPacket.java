@@ -1,34 +1,39 @@
 package net.raguraccoon.bizarre_wizardry.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 
 import java.util.function.Supplier;
 
-public class SetClassSyncS2CPacket {
+public class GetSpellCapacityS2CPacket {
 
-    int magicalClass;
+    int spellCapacity;
 
-    public SetClassSyncS2CPacket(int magicalClass) {
-        this.magicalClass = magicalClass;
+    public GetSpellCapacityS2CPacket(int spellCapacity) {
+        this.spellCapacity = spellCapacity;
     }
 
-    public SetClassSyncS2CPacket(FriendlyByteBuf buf) {
-        this.magicalClass = buf.readInt();
+    //Decoding constructor
+    public GetSpellCapacityS2CPacket(FriendlyByteBuf buf) {
+        spellCapacity = buf.readInt();
     }
 
+    //Encoding method
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(magicalClass);
+        buf.writeInt(spellCapacity);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             //Now on the client
-            ClientSpellData.setMagicalClass(this.magicalClass);
+            ClientSpellData.setSpellCapacity(this.spellCapacity);
         });
+
+
         return true;
     }
+
 }
