@@ -43,12 +43,12 @@ public class WandItem extends Item {
 
                 //Switch statement to determine which spell should be cast
                 switch (currentSpell) {
-                    case "Magician's Red":
-                        player.sendSystemMessage(Component.literal("Magician's Red!"));
-                        break;
                     case "Rhino Stomp":
                         Spells.stomp(level, player);
                         player.getCooldowns().addCooldown(this, 50);
+                        break;
+                    case "Magician's Red":
+                        player.sendSystemMessage(Component.literal("Magician's Red!"));
                         break;
                     case "Bloodletting":
                         player.sendSystemMessage(Component.literal("Bloodletting!"));

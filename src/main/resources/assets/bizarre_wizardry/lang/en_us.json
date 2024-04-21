@@ -7,9 +7,16 @@
 
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen": "Overview",
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.universal_button": "Spells",
-  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.unique_button": "Unique",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.spell_selection_button": "Spell Selection",
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.notoriety_button": "Notoriety",
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.test_button": "Test",
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.unlock_button": "Unlock",
-  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.back_button": "Back"
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.back_button": "Back",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.no_spell_selection_button": "No Spell",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.stomp_selection_button": "Stomp",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.magicians_red_selection_button": "Magician's Red",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.bloodletting_selection_button": "Bloodletting",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.put_first_button": "Spell 1",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.put_second_button": "Spell 2",
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.put_third_button": "Spell 3"
 }

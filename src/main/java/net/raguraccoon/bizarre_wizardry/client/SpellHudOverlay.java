@@ -25,7 +25,7 @@ public class SpellHudOverlay {
             "textures/spell/no_spell.png");
 
 
-    public static final ResourceLocation[] spellPictures = {RHINO_STOMP, BURN, BLOODLETTING};
+    public static final ResourceLocation[] spellPictures = {EMPTY_SPELL, RHINO_STOMP, BURN, BLOODLETTING};
 
     public static IGuiOverlay HUD_SPELLS = ((forgeGui, guiGraphics, partialTick, width, height) -> {
         int x = width / 2;
@@ -53,10 +53,10 @@ public class SpellHudOverlay {
                     guiGraphics.blit(EMPTY_SPELL, x - 135, y - 21,40, 20, 40, 20, 40, 20);
                     break;
                 case 1:
-                    guiGraphics.blit(BURN, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+                    guiGraphics.blit(RHINO_STOMP, x - 135, y - 21,40, 20, 40, 20, 40, 20);
                     break;
                 case 2:
-                    guiGraphics.blit(RHINO_STOMP, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+                    guiGraphics.blit(BURN, x - 135, y - 21,40, 20, 40, 20, 40, 20);
                     break;
                 case 3:
                     guiGraphics.blit(BLOODLETTING, x - 135, y - 21,40, 20, 40, 20, 40, 20);

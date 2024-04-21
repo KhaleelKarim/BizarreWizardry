@@ -33,16 +33,37 @@ public class BizarreWizardryMainScreen extends Screen {
     //Components to describe buttons
     private static final Component UNIVERSAL_BUTTON =
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.universal_button");
-    private static final Component UNIQUE_BUTTON =
-            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.unique_button");
+    private static final Component SPELL_SELECTION_BUTTON =
+            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.spell_selection_button");
     private static final Component NOTORIETY_BUTTON =
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.notoriety_button");
+
+
+    private static final Component NO_SPELL_SELECTION_BUTTON =
+            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.no_spell_selection_button");
+    private static final Component STOMP_SELECTION_BUTTON =
+            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.stomp_selection_button");
+    private static final Component MAGICIANS_RED_SELECTION_BUTTON =
+            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.magicians_red_selection_button");
+    private static final Component BLOODLETTING_SELECTION_BUTTON =
+            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.bloodletting_selection_button");
+
+
     private static final Component RESET_BUTTON =
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.reset_button");
     private static final Component UNLOCK =
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.unlock_button");
     private static final Component BACK =
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.back_button");
+
+
+
+    private static final Component PUT_FIRST =
+            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.put_first_button");
+    private static final Component PUT_SECOND =
+            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.put_second_button");
+    private static final Component PUT_THIRD =
+            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.put_third_button");
 
 
 
@@ -69,7 +90,7 @@ public class BizarreWizardryMainScreen extends Screen {
 
     //Menu Button objects
     private Button universalSpellsButton;
-    private Button uniqueSpellsButton;
+    private Button spellSelectionButton;
     private Button notorietyButton;
 
 
@@ -92,6 +113,22 @@ public class BizarreWizardryMainScreen extends Screen {
     private Button backToNotoriety;
 
 
+
+    //Buttons to select a spell
+    private Button selectNoSpellButton;
+    private Button selectStompButton;
+    private Button selectMagiciansRedButton;
+    private Button selectBloodlettingButton;
+
+
+
+    //Buttons to put a spell in a specific slot
+    private Button spell1;
+    private Button spell2;
+    private Button spell3;
+
+
+
     //List of menu buttons and hashmap to tell if it is selected
     Button[] menuButtons;
     HashMap<Button, Boolean> selectedMenuButtons = new HashMap<>();
@@ -108,6 +145,17 @@ public class BizarreWizardryMainScreen extends Screen {
     Button[] backButtons;
     HashMap<Button, Boolean> selectedBackButtons = new HashMap<>();
 
+    //List of selection buttons and 2 hashmaps, 1 if the button is selected
+    //and 1 to determine which spell position to place it into
+    Button[] selectionButtons;
+    HashMap<Button, Integer> selectionButtonsPositions = new HashMap<>();
+    HashMap<Button, Boolean> selectedSelectionButtons = new HashMap<>();
+
+
+    //List of buttons to put spells in a specific position
+    Button[] chooseButtons;
+    HashMap<Button, Boolean> selectedChooseButtons = new HashMap<>();
+
 
 
 
@@ -121,7 +169,7 @@ public class BizarreWizardryMainScreen extends Screen {
 
     //Booleans to test when to render what
     boolean renderUniversalScreen = false;
-    boolean renderUniqueScreen = false;
+    boolean renderSpellSelectionScreen = false;
     boolean renderNotorietyScreen = false;
 
 
@@ -164,12 +212,21 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
         //Button to open menu for class-specific spells
-        this.uniqueSpellsButton = addRenderableWidget(Button.builder(
-                UNIQUE_BUTTON,
+        this.spellSelectionButton = addRenderableWidget(Button.builder(
+                SPELL_SELECTION_BUTTON,
                         this::handleUniqueButton)
                 .bounds(this.leftPos + 165, this.topPos, 170, 20)
-                .tooltip(Tooltip.create(UNIQUE_BUTTON))
+                .tooltip(Tooltip.create(SPELL_SELECTION_BUTTON))
                 .build());
+
+        this.backToSpellSelection = addRenderableWidget(Button.builder(
+                        BACK, this::handleBackSpellSelectionButton)
+                .bounds(this.leftPos + 20, this.topPos + 160, 30, 20)
+                .build());
+        backToSpellSelection.active = false;
+        backToSpellSelection.visible = false;
+
+
 
         //Button to display info about your notoriety
         this.notorietyButton = addRenderableWidget(Button.builder(
@@ -178,6 +235,8 @@ public class BizarreWizardryMainScreen extends Screen {
                 .bounds(this.leftPos + 335, this.topPos, 165, 20)
                 .tooltip(Tooltip.create(NOTORIETY_BUTTON))
                 .build());
+
+        this.backToNotoriety = addRenderableWidget(Button.builder(BACK, this::handleBackNotorietyButton).build());
 
 
 
@@ -227,9 +286,47 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
 
+
+        //Buttons to place a spell into current spells array
+        this.selectNoSpellButton = addRenderableWidget(Button.builder(NO_SPELL_SELECTION_BUTTON, this::handleSelectNoSpellButton)
+                .bounds(this.leftPos + 50, this.topPos + 50, 100, 20)
+                .build());
+
+        this.selectStompButton = addRenderableWidget(Button.builder(STOMP_SELECTION_BUTTON, this::handleSelectStompButton)
+                .bounds(this.leftPos + 150, this.topPos + 50, 100, 20)
+                .build());
+
+        this.selectMagiciansRedButton = addRenderableWidget(Button.builder(MAGICIANS_RED_SELECTION_BUTTON, this::handleSelectMagiciansRedButton)
+                .bounds(this.leftPos + 250, this.topPos + 50, 100, 20)
+                .build());
+
+        this.selectBloodlettingButton = addRenderableWidget(Button.builder(BLOODLETTING_SELECTION_BUTTON, this::handleSelectBloodlettingButton)
+                .bounds(this.leftPos + 50, this.topPos + 70, 100, 20)
+                .build());
+
+
+
+
+
+
+        //Buttons to change what position a spell is going into
+        this.spell1 = addRenderableWidget(Button.builder(PUT_FIRST, this::handleSpell1Button)
+                .bounds(this.leftPos + 30, this.topPos + 100, 70, 50)
+                .build());
+
+        this.spell2 = addRenderableWidget(Button.builder(PUT_SECOND, this::handleSpell2Button)
+                .bounds(this.leftPos + 100, this.topPos + 100, 70, 50)
+                .build());
+
+        this.spell3 = addRenderableWidget(Button.builder(PUT_THIRD, this::handleSpell3Button)
+                .bounds(this.leftPos + 170, this.topPos + 100, 70, 50)
+                .build());
+
+
+
         //Putting buttons into their respective arrays
         //Also take care of the boolean arrays
-        this.menuButtons = new Button[]{universalSpellsButton, uniqueSpellsButton, notorietyButton};
+        this.menuButtons = new Button[]{universalSpellsButton, spellSelectionButton, notorietyButton};
         for (Button button : menuButtons)
             selectedMenuButtons.put(button, false);
 
@@ -244,6 +341,17 @@ public class BizarreWizardryMainScreen extends Screen {
         this.backButtons = new Button[]{backToUniversal, backToSpellSelection, backToNotoriety};
         for (Button button : backButtons)
             selectedBackButtons.put(button, false);
+        
+        this.selectionButtons = new Button[]{selectNoSpellButton, selectStompButton, selectMagiciansRedButton, selectBloodlettingButton};
+        for (Button button : selectionButtons) {
+            selectionButtonsPositions.put(button, 0);
+            selectedSelectionButtons.put(button, false);
+        }
+
+        this.chooseButtons = new Button[]{spell1, spell2, spell3};
+        for (Button button : chooseButtons)
+            selectedChooseButtons.put(button, false);
+        
 
 
         //Initializing the appropriate ones to invisible/inactive right away
@@ -255,10 +363,20 @@ public class BizarreWizardryMainScreen extends Screen {
             unlockSpellButtons[i].visible = false;
         }
 
-//        for (int i = 0 ; i < backButtons.length ; ++i) {
-//            backButtons[i].active = false;
-//            backButtons[i].visible = false;
-//        }
+        for (int i = 0 ; i < backButtons.length ; ++i) {
+            backButtons[i].active = false;
+            backButtons[i].visible = false;
+        }
+
+        for (int i = 0 ; i < selectionButtons.length ; ++i) {
+            selectionButtons[i].active = false;
+            selectionButtons[i].visible = false;
+        }
+
+        for (int i = 0 ; i < chooseButtons.length ; ++i) {
+            chooseButtons[i].active = false;
+            chooseButtons[i].visible = false;
+        }
 
 
     }
@@ -279,6 +397,8 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
         //Check and see which screens we should be rendering
+
+        //For the universal spell screen
         if (renderUniversalScreen) {
 
             //Iterate through all view spell buttons and set them visible/active
@@ -288,15 +408,13 @@ public class BizarreWizardryMainScreen extends Screen {
             }
 
 
-
-
             //After they are set as visible/active, check to see if they are selected in which case
             //the proper menu should be displayed!
             for (int i = 0 ; i < viewSpellButtons.length ; ++i) {
 
                 if (selectedViewSpellButtons.get(viewSpellButtons[i])) {
                     renderSpellScreen(graphics, spellDescriptions[i].getDescription(),
-                            spellRequirements[i].getRequirement(), SpellHudOverlay.spellPictures[i], unlockSpellButtons[i]);
+                            spellRequirements[i].getRequirement(), SpellHudOverlay.spellPictures[i + 1], unlockSpellButtons[i]);
 
                     hideViewButtons();
 
@@ -307,15 +425,54 @@ public class BizarreWizardryMainScreen extends Screen {
 
             }
 
+        }
+
+
+        //For the spell selection screen
+
+        if (renderSpellSelectionScreen) {
+
+            //Clean up other screens
+            hideViewButtons();
+
+
+            //Display each button to change spells
+            //Display current spells
+            displaySelectionScreenMenu(graphics);
+
+
+            //Check each choose button to see if it is selected
+            for (int i = 0 ; i < chooseButtons.length ; ++i) {
+
+                //If the button is selected
+                if (selectedChooseButtons.get(chooseButtons[i])) {
+
+                    //Display the appropriate screen
+                    displaySelectionSpellButtons(graphics, ClientSpellData.currentSpells[i]);
+
+                    //Display back button
+                    backToSpellSelection.active = true;
+                    backToSpellSelection.visible = true;
+
+                    break;
+
+                }
+
+            }
+
+
+
         } else {
 
-            backToUniversal.active = false;
-            backToUniversal.visible = false;
+            backToSpellSelection.visible = false;
+            backToSpellSelection.active = false;
 
-            hideViewButtons();
-            hideUnlockButtons();
+
+            hideChangeButtons();
+            hideSelectionButtons();
 
         }
+
 
 
         super.render(graphics, mouseX, mouseY, partialTicks);
@@ -327,6 +484,13 @@ public class BizarreWizardryMainScreen extends Screen {
     private void handleUniversalButton(Button button) {
         selectedMenuButtons.put(button, !(selectedMenuButtons.get(button)));
         this.renderUniversalScreen = !this.renderUniversalScreen;
+
+        renderSpellSelectionScreen = false;
+        renderNotorietyScreen = false;
+
+        hideBackButtons();
+        hideUnlockButtons();
+
     }
 
     private void handleBackUniversalButton(Button button) {
@@ -337,55 +501,179 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
         this.renderUniversalScreen = true;
-        selectedMenuButtons.put(button, true);
+        selectedMenuButtons.put(universalSpellsButton, true);
     }
 
     private void handleUniqueButton(Button button) {
         selectedMenuButtons.put(button, !(selectedMenuButtons.get(button)));
-        this.renderUniqueScreen = !this.renderUniqueScreen;
+        this.renderSpellSelectionScreen = !this.renderSpellSelectionScreen;
+
+        renderUniversalScreen = false;
+        renderNotorietyScreen = false;
+
+        hideBackButtons();
+        hideUnlockButtons();
+
     }
+
+    private void handleBackSpellSelectionButton(Button button) {
+        button.active = false;
+        button.visible = false;
+
+        for (Button chooseButton : selectedChooseButtons.keySet())
+            selectedChooseButtons.put(chooseButton, false);
+
+
+
+        this.renderSpellSelectionScreen = true;
+        //selectedMenuButtons.put(button, !selectedMenuButtons.get(button));
+    }
+
 
     private void handleNotorietyButton(Button button) {
         selectedMenuButtons.put(button, !(selectedMenuButtons.get(button)));
         this.renderNotorietyScreen = !this.renderNotorietyScreen;
+
+        renderUniversalScreen = false;
+        renderSpellSelectionScreen = false;
+
     }
+
+    private void handleBackNotorietyButton(Button button) {
+
+    }
+    
+    
+    
 
     private void handleStompButton(Button button) {
 
         selectedViewSpellButtons.put(button, !(selectedViewSpellButtons.get(button)));
 
-        //1 is the spell to unlock, 0 is the position we place it in!
-        int[] spellInfo = {2, 0};
-        ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(1));
-        ModMessages.sendToServer(new SetCurrentSpellsC2SPacket(spellInfo));
     }
     private void handleUnlockStompButton(Button button) {
         selectedUnlockSpellButtons.put(button, !(selectedUnlockSpellButtons.get(button)));
+
+        ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(1));
+
+        button.active = false;
+        button.visible = false;
+
     }
+    
+    
 
     private void handleMagiciansRedButton(Button button) {
 
         selectedViewSpellButtons.put(button, !(selectedViewSpellButtons.get(button)));
 
-        int[] spellInfo = {1, 1};
-        ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(0));
-        ModMessages.sendToServer(new SetCurrentSpellsC2SPacket(spellInfo));
     }
     private void handleUnlockMagiciansRedButton(Button button) {
         selectedUnlockSpellButtons.put(button, !(selectedUnlockSpellButtons.get(button)));
+
+        ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(2));
+
+        button.active = false;
+        button.visible = false;
+
     }
+    
+    
 
     private void handleBloodlettingButton(Button button) {
 
         selectedViewSpellButtons.put(button, !(selectedViewSpellButtons.get(button)));
 
-        int[] spellInfo = {3, 2};
-        ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(2));
-        ModMessages.sendToServer(new SetCurrentSpellsC2SPacket(spellInfo));
     }
     private void handleUnlockBloodlettingButton(Button button) {
         selectedUnlockSpellButtons.put(button, !(selectedUnlockSpellButtons.get(button)));
+
+        ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(3));
+
+        button.active = false;
+        button.visible = false;
+
     }
+    
+    
+    
+    
+    //For handling buttons that put spells into your current spells list
+    private void handleSelectStompButton(Button button) {
+        
+        int position = selectionButtonsPositions.get(button);
+        selectedSelectionButtons.put(button, !selectedSelectionButtons.get(button));
+        int[] spellInfo = {1, position};
+        
+        ModMessages.sendToServer(new SetCurrentSpellsC2SPacket(spellInfo));
+        
+    }
+
+    private void handleSelectMagiciansRedButton(Button button) {
+
+        int position = selectionButtonsPositions.get(button);
+        selectedSelectionButtons.put(button, !selectedSelectionButtons.get(button));
+        int[] spellInfo = {2, position};
+
+        ModMessages.sendToServer(new SetCurrentSpellsC2SPacket(spellInfo));
+
+    }
+
+    private void handleSelectBloodlettingButton(Button button) {
+
+        int position = selectionButtonsPositions.get(button);
+        selectedSelectionButtons.put(button, !selectedSelectionButtons.get(button));
+        int[] spellInfo = {3, position};
+
+        ModMessages.sendToServer(new SetCurrentSpellsC2SPacket(spellInfo));
+
+    }
+
+    private void handleSelectNoSpellButton(Button button) {
+
+        int position = selectionButtonsPositions.get(button);
+        selectedSelectionButtons.put(button, !selectedSelectionButtons.get(button));
+        int[] spellInfo = {0, position};
+
+        ModMessages.sendToServer(new SetCurrentSpellsC2SPacket(spellInfo));
+
+    }
+
+
+
+
+    //For handling choose buttons
+    private void handleSpell1Button(Button button) {
+
+        selectedChooseButtons.put(button, !selectedChooseButtons.get(button));
+
+        for (Button selectionButton : selectionButtonsPositions.keySet()) {
+            selectionButtonsPositions.put(selectionButton, 0);
+        }
+
+    }
+
+    private void handleSpell2Button(Button button) {
+
+        selectedChooseButtons.put(button, !selectedChooseButtons.get(button));
+
+        for (Button selectionButton : selectionButtonsPositions.keySet()) {
+            selectionButtonsPositions.put(selectionButton, 1);
+        }
+
+    }
+
+    private void handleSpell3Button(Button button) {
+
+        selectedChooseButtons.put(button, !selectedChooseButtons.get(button));
+
+        for (Button selectionButton : selectionButtonsPositions.keySet()) {
+            selectionButtonsPositions.put(selectionButton, 2);
+        }
+
+    }
+
+    
 
 
     private void handleResetButton(Button button) {
@@ -467,6 +755,116 @@ public class BizarreWizardryMainScreen extends Screen {
             selectedViewSpellButtons.put(key, false);
         }
 
+    }
+
+
+    //Helper method to display the main spell selection screen
+    private void displaySelectionScreenMenu(GuiGraphics graphics) {
+
+        //Hide selection buttons and display background
+        RenderSystem.setShaderTexture(0, FILLER);
+        graphics.blit(FILLER, this.leftPos + 7, this.topPos + 20, 0, 0, 486, 223, 486, 223);
+
+        backToSpellSelection.active = false;
+        backToSpellSelection.visible = false;
+
+
+        hideSelectionButtons();
+
+        for (int i = 0 ; i < chooseButtons.length ; ++i) {
+            chooseButtons[i].active = true;
+            chooseButtons[i].visible = true;
+        }
+
+
+        int offset = 0;
+
+        for (int i = 0 ; i < ClientSpellData.currentSpells.length ; ++i) {
+
+            ResourceLocation texture = SpellHudOverlay.spellPictures[ClientSpellData.currentSpells[i]];
+
+            RenderSystem.setShaderTexture(0, texture);
+            graphics.blit(texture, this.leftPos + 30 + offset, this.topPos + 50, 0, 0, 40, 20, 40, 20);
+
+            offset += 40;
+
+            chooseButtons[i].active = true;
+            chooseButtons[i].visible = true;
+
+        }
+
+    }
+
+    //Helper method to view spell selection buttons
+    private void displaySelectionSpellButtons(GuiGraphics graphics, int spellToChange) {
+
+        //Hide change spell buttons
+        hideChangeButtons();
+
+        //Make filler background
+        RenderSystem.setShaderTexture(0, FILLER);
+        graphics.blit(FILLER, this.leftPos + 7, this.topPos + 20, 0, 0, 486, 223, 486, 223);
+
+        for (int i = 0 ; i < selectionButtons.length ; ++i) {
+
+            //Make all visible
+            selectionButtons[i].visible = true;
+
+            //Only unlocked ones should be clickable
+            if (spellUnlocked(i))
+                selectionButtons[i].active = true;
+
+        }
+
+        //The no spell should always be clickable
+        selectionButtons[0].active = true;
+
+
+        //Display image of spell we are going to change
+
+        ResourceLocation spell = SpellHudOverlay.spellPictures[spellToChange];
+
+        graphics.blit(spell, this.leftPos + 300, this.topPos + 100, 0, 0, 40, 20, 40, 20);
+
+
+    }
+
+
+    //Helper method to linear search and see if a spell is unlocked
+    private boolean spellUnlocked(int spellIndex) {
+
+        if (ClientSpellData.availableSpells[spellIndex] == 1)
+            return true;
+
+        return false;
+
+    }
+
+    //Hides all change buttons
+    private void hideChangeButtons() {
+        for (int i = 0 ; i < chooseButtons.length ; ++i) {
+            chooseButtons[i].active = false;
+            chooseButtons[i].visible = false;
+        }
+    }
+
+    //Hides all selection buttons
+    private void hideSelectionButtons() {
+        for (int i = 0 ; i < selectionButtons.length ; ++i) {
+            selectionButtons[i].active = false;
+            selectionButtons[i].visible = false;
+            selectedSelectionButtons.put(selectionButtons[i], false);
+
+        }
+    }
+
+    //Hides all back buttons
+    private void hideBackButtons() {
+        for (int i = 0 ; i < backButtons.length ; ++i) {
+            backButtons[i].active = false;
+            backButtons[i].visible = false;
+            selectedBackButtons.put(backButtons[i], false);
+        }
     }
 
 

@@ -4,7 +4,7 @@ public class ClientSpellData {
     private static int magicalClass;
     private static int spellCapacity = 3;
 
-    public static String[] spellsLibrary = {"No Spell", "Magician's Red", "Rhino Stomp", "Bloodletting", "Overgrowth"};
+    public static String[] spellsLibrary = {"No Spell", "Rhino Stomp", "Magician's Red", "Bloodletting", "Overgrowth"};
     public static int[] availableSpells = new int[spellsLibrary.length];
     public static int[] currentSpells = new int[spellCapacity];
 
