@@ -140,6 +140,7 @@ public class BizarreWizardryMainScreen extends Screen {
     //List of buttons to unlock spells and hashmap
     Button[] unlockSpellButtons;
     HashMap<Button, Boolean> selectedUnlockSpellButtons = new HashMap<>();
+    HashMap<Button, Integer> unlockSpellButtonsPosition = new HashMap<>();
 
     //List of buttons to go back and hashmap
     Button[] backButtons;
@@ -221,7 +222,7 @@ public class BizarreWizardryMainScreen extends Screen {
 
         this.backToSpellSelection = addRenderableWidget(Button.builder(
                         BACK, this::handleBackSpellSelectionButton)
-                .bounds(this.leftPos + 20, this.topPos + 160, 30, 20)
+                .bounds(this.leftPos + 20, this.topPos + 210, 30, 20)
                 .build());
         backToSpellSelection.active = false;
         backToSpellSelection.visible = false;
@@ -311,15 +312,15 @@ public class BizarreWizardryMainScreen extends Screen {
 
         //Buttons to change what position a spell is going into
         this.spell1 = addRenderableWidget(Button.builder(PUT_FIRST, this::handleSpell1Button)
-                .bounds(this.leftPos + 30, this.topPos + 100, 70, 50)
+                .bounds(this.leftPos + 76, this.topPos + 175, 70, 30)
                 .build());
 
         this.spell2 = addRenderableWidget(Button.builder(PUT_SECOND, this::handleSpell2Button)
-                .bounds(this.leftPos + 100, this.topPos + 100, 70, 50)
+                .bounds(this.leftPos + 215, this.topPos + 175, 70, 30)
                 .build());
 
         this.spell3 = addRenderableWidget(Button.builder(PUT_THIRD, this::handleSpell3Button)
-                .bounds(this.leftPos + 170, this.topPos + 100, 70, 50)
+                .bounds(this.leftPos + 354, this.topPos + 175, 70, 30)
                 .build());
 
 
@@ -337,6 +338,9 @@ public class BizarreWizardryMainScreen extends Screen {
         this.unlockSpellButtons = new Button[]{unlockStompButton, unlockMagiciansRedButton, unlockBloodLettingButton};
         for (Button button : unlockSpellButtons)
             selectedUnlockSpellButtons.put(button, false);
+        for (int i = 0 ; i < unlockSpellButtons.length ; ++i)
+            unlockSpellButtonsPosition.put(unlockSpellButtons[i], i + 1);
+
 
         this.backButtons = new Button[]{backToUniversal, backToSpellSelection, backToNotoriety};
         for (Button button : backButtons)
@@ -557,7 +561,6 @@ public class BizarreWizardryMainScreen extends Screen {
         ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(1));
 
         button.active = false;
-        button.visible = false;
 
     }
     
@@ -574,7 +577,6 @@ public class BizarreWizardryMainScreen extends Screen {
         ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(2));
 
         button.active = false;
-        button.visible = false;
 
     }
     
@@ -591,7 +593,6 @@ public class BizarreWizardryMainScreen extends Screen {
         ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(3));
 
         button.active = false;
-        button.visible = false;
 
     }
     
@@ -714,7 +715,12 @@ public class BizarreWizardryMainScreen extends Screen {
 
         //Make unlocking button visible
         unlockButton.visible = true;
-        unlockButton.active = true;
+
+        //If the spell is unlocked, don't let the player click it anymore
+        if (ClientSpellData.availableSpells[unlockSpellButtonsPosition.get(unlockButton)] == 1)
+            unlockButton.active = false;
+        else
+            unlockButton.active = true;
 
     }
 
@@ -777,16 +783,16 @@ public class BizarreWizardryMainScreen extends Screen {
         }
 
 
-        int offset = 0;
+        int offset = 94;
 
         for (int i = 0 ; i < ClientSpellData.currentSpells.length ; ++i) {
 
             ResourceLocation texture = SpellHudOverlay.spellPictures[ClientSpellData.currentSpells[i]];
 
             RenderSystem.setShaderTexture(0, texture);
-            graphics.blit(texture, this.leftPos + 30 + offset, this.topPos + 50, 0, 0, 40, 20, 40, 20);
+            graphics.blit(texture, this.leftPos + offset, this.topPos + 130, 0, 0, 40, 20, 40, 20);
 
-            offset += 40;
+            offset += 138;
 
             chooseButtons[i].active = true;
             chooseButtons[i].visible = true;
@@ -824,13 +830,13 @@ public class BizarreWizardryMainScreen extends Screen {
 
         ResourceLocation spell = SpellHudOverlay.spellPictures[spellToChange];
 
-        graphics.blit(spell, this.leftPos + 300, this.topPos + 100, 0, 0, 40, 20, 40, 20);
+        graphics.blit(spell, this.leftPos + 400, this.topPos + 100, 0, 0, 40, 20, 40, 20);
 
 
     }
 
 
-    //Helper method to linear search and see if a spell is unlocked
+    //Helper method to see if a spell is unlocked
     private boolean spellUnlocked(int spellIndex) {
 
         if (ClientSpellData.availableSpells[spellIndex] == 1)
