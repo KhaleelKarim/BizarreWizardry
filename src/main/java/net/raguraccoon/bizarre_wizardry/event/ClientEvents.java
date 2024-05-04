@@ -31,7 +31,7 @@ public class ClientEvents {
 
             if (KeyBinding.DEBUG_KEY.consumeClick()) {
                 Player player = Minecraft.getInstance().player;
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().setScreen(new BizarreWizardryMainScreen(player)));
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().setScreen(new BizarreWizardryMainScreen()));
             }
         }
     }

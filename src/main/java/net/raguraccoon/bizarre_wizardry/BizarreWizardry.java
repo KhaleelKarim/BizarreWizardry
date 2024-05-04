@@ -12,6 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import net.raguraccoon.bizarre_wizardry.item.ModCreativeModeTabs;
 import net.raguraccoon.bizarre_wizardry.item.ModItems;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ public class BizarreWizardry {
         modEventBus.addListener(this::commonSetup);
 
         ModItems.register(modEventBus);
+        ModCreativeModeTabs.register(modEventBus);
 
 
         MinecraftForge.EVENT_BUS.register(this);

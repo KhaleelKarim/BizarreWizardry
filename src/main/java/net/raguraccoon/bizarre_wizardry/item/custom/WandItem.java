@@ -20,7 +20,6 @@ public class WandItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        //Get basic information about the player
 
         //Interaction result should only happen on the server side and the main hand
         if ((!level.isClientSide()) && (hand.equals(InteractionHand.MAIN_HAND))) {
@@ -43,7 +42,7 @@ public class WandItem extends Item {
 
                 //Switch statement to determine which spell should be cast
                 switch (currentSpell) {
-                    case "Rhino Stomp":
+                    case "Stomp":
                         Spells.stomp(level, player);
                         player.getCooldowns().addCooldown(this, 50);
                         break;

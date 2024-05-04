@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
+import net.raguraccoon.bizarre_wizardry.item.custom.StoneOfTheSelf;
 import net.raguraccoon.bizarre_wizardry.item.custom.WandItem;
 
 public class ModItems {
@@ -16,6 +17,11 @@ public class ModItems {
     //Below is all the items that are registered in the mod
     public static final RegistryObject<Item> WAND = ITEMS.register("wand",
             () -> new WandItem(new Item.Properties()
+                    .stacksTo(1)
+                    .setNoRepair()));
+
+    public static final RegistryObject<Item> STONE_OF_THE_SELF = ITEMS.register("stone_of_the_self",
+            () -> new StoneOfTheSelf(new Item.Properties()
                     .stacksTo(1)
                     .setNoRepair()));
 

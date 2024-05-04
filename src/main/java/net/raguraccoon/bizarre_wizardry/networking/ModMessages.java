@@ -92,6 +92,21 @@ public class ModMessages {
                 .add();
 
 
+
+        //Packet for checking player stats
+        net.messageBuilder(ValidateUnlockC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ValidateUnlockC2SPacket::new)
+                .encoder(ValidateUnlockC2SPacket::encode)
+                .consumerMainThread(ValidateUnlockC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(FinalizeUnlockS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(FinalizeUnlockS2CPacket::new)
+                .encoder(FinalizeUnlockS2CPacket::encode)
+                .consumerMainThread(FinalizeUnlockS2CPacket::handle)
+                .add();
+
+
     }
 
 

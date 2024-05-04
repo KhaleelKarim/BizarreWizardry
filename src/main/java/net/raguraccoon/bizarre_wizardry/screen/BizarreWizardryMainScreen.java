@@ -1,13 +1,16 @@
 package net.raguraccoon.bizarre_wizardry.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
@@ -15,6 +18,9 @@ import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.SetAvailableSpellsC2SPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.SetCurrentSpellsC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.ValidateUnlockC2SPacket;
+import net.raguraccoon.bizarre_wizardry.statistics.PlayerRequirementChecker;
+import net.raguraccoon.bizarre_wizardry.statistics.PlayerStatsGetter;
 import net.raguraccoon.bizarre_wizardry.util.SpellDescriptions;
 import net.raguraccoon.bizarre_wizardry.util.SpellRequirements;
 import org.jetbrains.annotations.NotNull;
@@ -83,9 +89,13 @@ public class BizarreWizardryMainScreen extends Screen {
 
     //Information about main screen and player
     private final int imageWidth, imageHeight;
-    private Player player;
+    private Player player = Minecraft.getInstance().player;
     private int leftPos, topPos;
 
+
+    //Stats getter
+    //PlayerStatsGetter statsGetter = new PlayerStatsGetter((LocalPlayer) player);
+    PlayerRequirementChecker requirementChecker = new PlayerRequirementChecker(player);
 
 
     //Menu Button objects
@@ -175,13 +185,13 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
     
-    public BizarreWizardryMainScreen(Player player) {
+    public BizarreWizardryMainScreen() {
         super(TITLE);
 
-        this.player = player;
         this.imageWidth = 500;
         this.imageHeight = 250;
 
+//        this.player = player;
 
     }
 
@@ -417,8 +427,7 @@ public class BizarreWizardryMainScreen extends Screen {
             for (int i = 0 ; i < viewSpellButtons.length ; ++i) {
 
                 if (selectedViewSpellButtons.get(viewSpellButtons[i])) {
-                    renderSpellScreen(graphics, spellDescriptions[i].getDescription(),
-                            spellRequirements[i].getRequirement(), SpellHudOverlay.spellPictures[i + 1], unlockSpellButtons[i]);
+                    renderSpellScreen(graphics, i);
 
                     hideViewButtons();
 
@@ -555,6 +564,8 @@ public class BizarreWizardryMainScreen extends Screen {
         selectedViewSpellButtons.put(button, !(selectedViewSpellButtons.get(button)));
 
     }
+
+
     private void handleUnlockStompButton(Button button) {
         selectedUnlockSpellButtons.put(button, !(selectedUnlockSpellButtons.get(button)));
 
@@ -693,7 +704,15 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
     //Helper method to render screens for unlocking spells
-    private void renderSpellScreen(GuiGraphics graphics, Component description, Component requirements, ResourceLocation spellImage, Button unlockButton) {
+    private void renderSpellScreen(GuiGraphics graphics, int spellIndex) {
+
+        //Get some basic info
+        Component description = spellDescriptions[spellIndex].getDescription();
+        Component requirements = spellRequirements[spellIndex].getRequirement();
+        ResourceLocation spellImage = SpellHudOverlay.spellPictures[spellIndex + 1];
+        Button unlockButton = unlockSpellButtons[spellIndex];
+        String currentSpell = ClientSpellData.spellsLibrary[spellIndex + 1];
+
 
         //Begin by rendering background
         RenderSystem.setShaderTexture(0, FILLER);
@@ -715,12 +734,23 @@ public class BizarreWizardryMainScreen extends Screen {
 
         //Make unlocking button visible
         unlockButton.visible = true;
+        unlockButton.active = false;
 
         //If the spell is unlocked, don't let the player click it anymore
-        if (ClientSpellData.availableSpells[unlockSpellButtonsPosition.get(unlockButton)] == 1)
+        if (ClientSpellData.availableSpells[unlockSpellButtonsPosition.get(unlockButton)] == 1) {
             unlockButton.active = false;
-        else
-            unlockButton.active = true;
+        } else {
+
+            //Check if the spell is unlockable
+            ModMessages.sendToServer(new ValidateUnlockC2SPacket(currentSpell));
+
+            //If it is, let the user click the button
+            if (ClientSpellData.spellBooleans[spellIndex])
+                unlockButton.active = true;
+            else //Set it false otherwise
+                unlockButton.active = false;
+
+        }
 
     }
 

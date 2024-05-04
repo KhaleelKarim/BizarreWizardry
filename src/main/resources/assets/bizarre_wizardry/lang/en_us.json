@@ -1,5 +1,8 @@
 {
   "item.bizarre_wizardry.wand": "Wand",
+  "item.bizarre_wizardry.stone_of_the_self": "Stone of the Self",
+
+  "creativetab.bizarre_tab": "Bizarre Wizardry",
 
   "key.category.bizarre_wizardry.bizarre_category": "Bizarre Wizardry",
   "key.bizarre_wizardry.switch_spell": "Switch Spell",
