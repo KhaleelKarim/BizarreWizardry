@@ -15,6 +15,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Random;
+
 
 public class Spells {
 
@@ -30,12 +32,31 @@ public class Spells {
         AABB launchBoundingBox = playerBoundingBox.inflate(5, 0, 5);
         Iterable<Entity> relevantEntities = level.getEntitiesOfClass(Entity.class, launchBoundingBox);
 
-        //Vector defining what trajectory entities will be launched
-        Vec3 launchVector = new Vec3(0, 1.4, 0);
+        //Generate a random trajectory
+        Random randomNumberGenerator = new Random();
+
 
         //Iterate through all entities in the launch bounding box and launch 'em
         for (Entity entity : relevantEntities) {
             if (entity instanceof LivingEntity) {
+
+                //Get random x and z directions
+                double xOffset = randomNumberGenerator.nextDouble(.75);
+                double zOffset = randomNumberGenerator.nextDouble(.75);
+
+                //Randomly decide for direction to be positive or negative
+                boolean positiveX = randomNumberGenerator.nextBoolean();
+                boolean positiveZ = randomNumberGenerator.nextBoolean();
+
+                if (!positiveX)
+                    xOffset *= -1;
+
+                if (!positiveZ)
+                    zOffset *= -1;
+
+                //Vector defining what trajectory entities will be launched
+                Vec3 launchVector = new Vec3(xOffset, 1.4, zOffset);
+
                 entity.setDeltaMovement(launchVector);
             }
         }

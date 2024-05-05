@@ -46,7 +46,7 @@ public class ValidateUnlockC2SPacket {
                     break;
 
                 case "Bloodletting":
-                    player.sendSystemMessage(Component.literal("Checking for bloodletting"));
+                    spellUnlockable = statsGetter.unlockedBloodletting();
                     break;
 
                 default:

@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 
 /*
@@ -33,29 +34,25 @@ public class PlayerStatsGetter {
 
     }
 
-    public int stomp() {
-        Stat<?> fallStat = Stats.CUSTOM.get(Stats.FALL_ONE_CM);
-        int fallDistance = player.getStats().getValue(fallStat) / 100;
-
-        return fallDistance;
-    }
-
+    //Has player unlocked Magician's Red?
     public boolean unlockedMagiciansRed() {
 
-        Stat<?> killsStat = Stats.CUSTOM.get(Stats.MOB_KILLS);
-        int kills = player.getStats().getValue(killsStat);
+        Stat<?> blazeKillsStats = Stats.ENTITY_KILLED.get(EntityType.BLAZE);
+        int blazeKills = player.getStats().getValue(blazeKillsStats);
 
-        return kills >= 3;
+        return blazeKills >= 3;
+
+    }
+
+    //Has player unlocked Bloodletting?
+    public boolean unlockedBloodletting() {
+
+        Stat<?> spiderEyeEatenStat = Stats.ITEM_USED.get(Items.SPIDER_EYE);
+        int spiderEyesEaten = player.getStats().getValue(spiderEyeEatenStat);
+
+        return spiderEyesEaten >= 1;
 
     }
 
-    public int Red() {
-
-        Stat<?> killsStat = Stats.CUSTOM.get(Stats.MOB_KILLS);
-        int kills = player.getStats().getValue(killsStat);
-
-        return kills;
-
-    }
 
 }
