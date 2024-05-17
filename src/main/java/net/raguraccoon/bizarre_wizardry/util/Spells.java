@@ -4,6 +4,7 @@ package net.raguraccoon.bizarre_wizardry.util;
 
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -12,15 +13,31 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
+import net.raguraccoon.bizarre_wizardry.entity.magicians_red.MagiciansRed;
 
 import java.util.Random;
 
 
 public class Spells {
 
-    public static void burn(UseOnContext context) {
+    public static void burn(Level level, Player player) {
+
+        Vec3 lookAngle = player.getLookAngle(); //Used to shoot projectile
+
+        //Create instance of projectile
+        MagiciansRed magiciansRed = new MagiciansRed(ModEntities.MAGICIANS_RED.get(),
+                                        player.getX(), player.getEyeY(), player.getZ(),
+                                        0, 0, 0, level);
+
+        //Shoot projectile
+        magiciansRed.shoot(lookAngle.x, lookAngle.y, lookAngle.z, 1f, 0);
+        level.addFreshEntity(magiciansRed);
+
+
 
     }
 

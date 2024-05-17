@@ -1,6 +1,7 @@
 package net.raguraccoon.bizarre_wizardry.event;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -14,6 +15,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
+import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
+import net.raguraccoon.bizarre_wizardry.entity.magicians_red.MagiciansRedRenderer;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.SwitchSpellC2SPacket;
 import net.raguraccoon.bizarre_wizardry.screen.BizarreWizardryMainScreen;
@@ -50,7 +53,7 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-
+            event.registerEntityRenderer(ModEntities.MAGICIANS_RED.get(), MagiciansRedRenderer::new);
         }
 
         @SubscribeEvent
@@ -63,7 +66,7 @@ public class ClientEvents {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            EntityRenderers.register(ModEntities.MAGICIANS_RED.get(), MagiciansRedRenderer::new);
         }
     }
 

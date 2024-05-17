@@ -47,7 +47,8 @@ public class WandItem extends Item {
                         player.getCooldowns().addCooldown(this, 50);
                         break;
                     case "Magician's Red":
-                        player.sendSystemMessage(Component.literal("Magician's Red!"));
+                        Spells.burn(level, player);
+                        player.getCooldowns().addCooldown(this, 10);
                         break;
                     case "Bloodletting":
                         player.sendSystemMessage(Component.literal("Bloodletting!"));

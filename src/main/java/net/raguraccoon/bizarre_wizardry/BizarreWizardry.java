@@ -12,10 +12,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
 import net.raguraccoon.bizarre_wizardry.item.ModCreativeModeTabs;
 import net.raguraccoon.bizarre_wizardry.item.ModItems;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import org.slf4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(BizarreWizardry.MOD_ID)
@@ -32,6 +34,12 @@ public class BizarreWizardry {
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
+
+
+        ModEntities.register(modEventBus);
+
+        GeckoLib.initialize();
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
