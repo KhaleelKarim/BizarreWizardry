@@ -74,30 +74,9 @@ public class MagiciansRedModel extends GeoModel<MagiciansRed> {
 
 
 
-
             //Set rotations
             phoenix.setRotX((float) (angleX));
             phoenix.setRotY((float) (-1 * angleY));
-
-
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal(
-                    "Travel Vector: " + travelVector.x + " " + travelVector.y + " " + travelVector.z
-            ));
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal(
-                    "No Y Vector: " + noYTravel.x + " " + noYTravel.y
-            ));
-
-//            Minecraft.getInstance().player.sendSystemMessage(Component.literal(
-//                    "No X Vector: " + noXTravel.x + " " + noXTravel.y
-//            ));
-
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal(
-                    "Rotation of X: " + (angleX * Mth.RAD_TO_DEG)
-            ));
-
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal(
-                    "Rotation of Y: " + (angleY * Mth.RAD_TO_DEG)
-            ));
 
 
         }

@@ -79,6 +79,10 @@ public class BizarreWizardryMainScreen extends Screen {
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/home_screen.png");
     private static final ResourceLocation FILLER =
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/filler.png");
+    private static final ResourceLocation NOTORIETY_SCREEN =
+            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/notoriety_screen.png");
+
+
     private static final ResourceLocation STOMP =
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/buttons/stomp_button.png");
     private static final ResourceLocation MAGICIANS_RED =
@@ -415,6 +419,9 @@ public class BizarreWizardryMainScreen extends Screen {
         //For the universal spell screen
         if (renderUniversalScreen) {
 
+            //Clean up
+            hideChangeButtons();
+
             //Iterate through all view spell buttons and set them visible/active
             for (int i = 0 ; i < viewSpellButtons.length ; ++i) {
                 viewSpellButtons[i].visible = true;
@@ -438,12 +445,7 @@ public class BizarreWizardryMainScreen extends Screen {
 
             }
 
-        }
-
-
-        //For the spell selection screen
-
-        if (renderSpellSelectionScreen) {
+        } else if (renderSpellSelectionScreen) {
 
             //Clean up other screens
             hideViewButtons();
@@ -475,15 +477,24 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
 
-        } else {
+        } else if (renderNotorietyScreen) {
 
+            //Clean up
+            hideViewButtons();
+            hideChangeButtons();
+
+            RenderSystem.setShaderTexture(0, NOTORIETY_SCREEN);
+            graphics.blit(NOTORIETY_SCREEN, this.leftPos + 7, this.topPos + 20, 0, 0, 486, 223, 486, 223);
+
+
+
+        } else {
             backToSpellSelection.visible = false;
             backToSpellSelection.active = false;
 
 
             hideChangeButtons();
             hideSelectionButtons();
-
         }
 
 

@@ -8,6 +8,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -96,7 +98,18 @@ public class Spells {
         }
     }
 
-    public static void bloodletting(UseOnContext context) {
+    public static void bloodletting(Level level, Player player) {
+
+        //Damage player for 3 hearts
+        player.hurt(player.damageSources().generic(), 3);
+
+        //Give player speed and strength
+
+        MobEffectInstance speed = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 1);
+        MobEffectInstance strength = new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 0);
+
+        player.addEffect(speed);
+        player.addEffect(strength);
 
     }
 }

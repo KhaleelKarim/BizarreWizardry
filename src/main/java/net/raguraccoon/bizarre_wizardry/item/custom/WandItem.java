@@ -51,7 +51,8 @@ public class WandItem extends Item {
                         player.getCooldowns().addCooldown(this, 10);
                         break;
                     case "Bloodletting":
-                        player.sendSystemMessage(Component.literal("Bloodletting!"));
+                        Spells.bloodletting(level, player);
+                        player.getCooldowns().addCooldown(this, 5);
                         break;
                     case "Overgrowth":
                         player.sendSystemMessage(Component.literal("Overgrowth!"));
