@@ -15,7 +15,7 @@ public class CurrentSpells {
         return this.currentSpells;
     }
 
-    //Sets a specific index to 1 meaning that it has been unlocked
+
     public void setSpell(int spell, int index) {
         currentSpells[index] = spell;
     }

@@ -21,5 +21,17 @@
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.bloodletting_selection_button": "Bloodletting",
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.put_first_button": "Spell 1",
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.put_second_button": "Spell 2",
-  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.put_third_button": "Spell 3"
+  "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.put_third_button": "Spell 3",
+
+  "stomp_description_line_one": "In a wide area around the player, send mobs flying upwards",
+  "magicians_red_description_line_one": "Shoot out a fireball that incinerates and pierces mobs",
+  "bloodletting_description_line_one": "Sacrifice three hearts for speed and strength boost. The spell will NOT prevent you",
+  "bloodletting_description_line_two": "from killing yourself",
+
+  "stomp_requirements_line_one": "Must fall from 20 blocks",
+  "magicians_red_requirements_line_one": "Must swim in lava for 5 seconds",
+  "bloodletting_requirements_line_one": "Must eat a spider's eye"
+
+
+
 }
