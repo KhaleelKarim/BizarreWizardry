@@ -4,6 +4,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
+import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
 import net.raguraccoon.bizarre_wizardry.util.SpellInformation;
 
 import java.util.HashMap;
@@ -58,11 +59,11 @@ public class ScreenVariables {
 
 
     public static final ResourceLocation STOMP =
-            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/buttons/stomp_button.png");
+            SpellHudOverlay.spellPictures[1];
     public static final ResourceLocation MAGICIANS_RED =
-            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/buttons/magicians_red_button.png");
+            SpellHudOverlay.spellPictures[2];
     public static final ResourceLocation BLOODLETTING =
-            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/buttons/bloodletting_button.png");
+            SpellHudOverlay.spellPictures[3];
 
 
 

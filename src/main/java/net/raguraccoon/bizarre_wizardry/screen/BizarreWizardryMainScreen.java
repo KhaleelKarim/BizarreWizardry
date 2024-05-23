@@ -143,9 +143,9 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
         //This group of buttons should only appear in the universal screen
-        this.stompButton = addRenderableWidget(new ImageButton(this.leftPos + 100, this.topPos + 100,
-                25, 25, 0, 0,
-                2, ScreenVariables.STOMP,25,25, ScreenButtonHandlers::handleViewSpellButton));
+        this.stompButton = addRenderableWidget(new ImageButton(this.leftPos + 30, this.topPos + 81,
+                40, 20, 0, 0,
+                1, ScreenVariables.STOMP,40,20, ScreenButtonHandlers::handleViewSpellButton));
         this.stompButton.active = false;
         this.stompButton.visible = false;
 
@@ -155,9 +155,9 @@ public class BizarreWizardryMainScreen extends Screen {
         this.unlockStompButton.visible = false;
 
 
-        this.magiciansRedButton = addRenderableWidget(new ImageButton(this.leftPos + 200, this.topPos + 100,
-                25, 25, 0, 0,
-                2, ScreenVariables.MAGICIANS_RED,25,25, ScreenButtonHandlers::handleViewSpellButton));
+        this.magiciansRedButton = addRenderableWidget(new ImageButton(this.leftPos + 30, this.topPos + 162,
+                40, 20, 0, 0,
+                1, ScreenVariables.MAGICIANS_RED,40,20, ScreenButtonHandlers::handleViewSpellButton));
         this.magiciansRedButton.active = false;
         this.magiciansRedButton.visible = false;
 
@@ -167,9 +167,9 @@ public class BizarreWizardryMainScreen extends Screen {
         this.unlockMagiciansRedButton.visible = false;
 
 
-        this.bloodlettingButton = addRenderableWidget(new ImageButton(this.leftPos + 300, this.topPos + 100,
-                25, 25, 0, 0,
-                2, ScreenVariables.BLOODLETTING,25,25, ScreenButtonHandlers::handleViewSpellButton));
+        this.bloodlettingButton = addRenderableWidget(new ImageButton(this.leftPos + 110, this.topPos + 121,
+                40, 20, 0, 0,
+                1, ScreenVariables.BLOODLETTING,40,20, ScreenButtonHandlers::handleViewSpellButton));
         this.bloodlettingButton.active = false;
         this.bloodlettingButton.visible = false;
 
