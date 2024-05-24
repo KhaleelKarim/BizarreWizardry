@@ -1,5 +1,6 @@
 package net.raguraccoon.bizarre_wizardry.entity.magicians_red;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
@@ -10,13 +11,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import org.checkerframework.checker.units.qual.A;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -134,10 +135,11 @@ public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity
 
             //Get the level to get surrounding entities
             Level level = level();
+            BlockPos impactPos = blockHitResult.getBlockPos();
 
             //Bounding box that contains entities to burn
-            AABB burnables = new AABB(blockHitResult.getBlockPos());
-            burnables = burnables.inflate(2, 1, 2);
+            AABB burnables = new AABB(impactPos);
+            burnables = burnables.inflate(2, 2, 2);
 
             //Create iterable of entities to burn
             Iterable<Entity> toBurn = level.getEntitiesOfClass(Entity.class, burnables);
@@ -146,26 +148,28 @@ public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity
             //Iterate thru entities to burn em!
             for (Entity entity : toBurn) {
 
+                if (entity instanceof Player)
+                    continue;
+
                 entity.setSecondsOnFire(3);
 
             }
             
             
             //Play fire sound and create effects
-            level.playSound(null, blockHitResult.getBlockPos(), SoundEvents.FIRE_AMBIENT, SoundSource.PLAYERS);
+            level.playSound(null, blockHitResult.getBlockPos(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS);
 
-            ParticleOptions particleOptions = ParticleTypes.ASH;
+            ParticleOptions particleOptions = ParticleTypes.FLAME;
 
-            for (double x = burnables.minX ; x < burnables.maxX ; ++x) {
-                for (double y = burnables.minY ; y < burnables.maxY ; ++y) {
-                    for (double z = burnables.minZ ; z < burnables.maxZ ; ++z) {
-                        if (!level.isClientSide()) {
-                            ServerLevel serverLevel = (ServerLevel) level;
-                            serverLevel.sendParticles(particleOptions, x, y, z, 1, 0, 0, 0, 0);
-                        }
-                    }
-                }
+            int x = impactPos.getX();
+            int y = impactPos.getY();
+            int z = impactPos.getZ();
+
+            if (!level.isClientSide()) {
+                ServerLevel serverLevel = (ServerLevel) level;
+                serverLevel.sendParticles(particleOptions, x, y, z, 20, 0, 0, 0, 0.1);
             }
+
             
         }
 

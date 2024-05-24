@@ -1,6 +1,7 @@
 package net.raguraccoon.bizarre_wizardry.screen;
 
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
@@ -50,6 +51,8 @@ public class ScreenVariables {
 
 
     //Textures
+
+    //Background textures
     public static final ResourceLocation HOME_SCREEN =
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/home_screen.png");
     public static final ResourceLocation FILLER =
@@ -58,6 +61,7 @@ public class ScreenVariables {
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/notoriety_screen.png");
 
 
+    //Spell icon textures
     public static final ResourceLocation STOMP =
             SpellHudOverlay.spellPictures[1];
     public static final ResourceLocation MAGICIANS_RED =
@@ -66,14 +70,26 @@ public class ScreenVariables {
             SpellHudOverlay.spellPictures[3];
 
 
+    //Special textures for soft-locked and hard-locked spells
+    public static final ResourceLocation NO_LOCK =
+            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/no_lock.png");
+    public static final ResourceLocation SOFT_LOCK =
+            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/soft_lock.png");
+    public static final ResourceLocation HARD_LOCK =
+            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/hard_lock.png");
+
 
     //List of menu buttons and hashmap to tell if it is selected
     public static Button[] menuButtons;
     public static HashMap<Button, Boolean> selectedMenuButtons = new HashMap<>();
 
     //List of buttons to view spell unlocking and hashmap
-    public static Button[] viewSpellButtons;
+    public static ImageButton[] viewSpellButtons;
     public static HashMap<Button, Boolean> selectedViewSpellButtons = new HashMap<>();
+    public static HashMap<Button, int[]> viewSpellRequirements = new HashMap<>();
+    public static HashMap<Button, Integer> spellNumberFromViewButton = new HashMap<>();
+
+
 
     //List of buttons to unlock spells and hashmap
     public static Button[] unlockSpellButtons;

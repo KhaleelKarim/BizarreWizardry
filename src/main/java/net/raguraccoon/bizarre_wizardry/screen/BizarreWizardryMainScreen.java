@@ -17,6 +17,8 @@ import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.ValidateUnlockC2SPacket;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+
 
 public class BizarreWizardryMainScreen extends Screen {
 
@@ -40,10 +42,10 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
     //View spell unlocking buttons
-    private Button stompButton;
-    private Button magiciansRedButton;
-    private Button bloodlettingButton;
-    private Button resetButton;
+    private ImageButton stompButton;
+    private ImageButton magiciansRedButton;
+    private ImageButton bloodlettingButton;
+    private ImageButton resetButton;
 
 
     //Unlocking spell buttons
@@ -150,6 +152,7 @@ public class BizarreWizardryMainScreen extends Screen {
         this.stompButton.visible = false;
 
 
+
         this.unlockStompButton = addRenderableWidget(makeUnlockButton(ScreenButtonHandlers::handleUnlockButton));
         this.unlockStompButton.active = false;
         this.unlockStompButton.visible = false;
@@ -240,9 +243,13 @@ public class BizarreWizardryMainScreen extends Screen {
         for (Button button : ScreenVariables.menuButtons)
             ScreenVariables.selectedMenuButtons.put(button, false);
 
-        ScreenVariables.viewSpellButtons = new Button[]{stompButton, magiciansRedButton, bloodlettingButton};
+        ScreenVariables.viewSpellButtons = new ImageButton[]{stompButton, magiciansRedButton, bloodlettingButton};
         for (Button button : ScreenVariables.viewSpellButtons)
             ScreenVariables.selectedViewSpellButtons.put(button, false);
+
+        ScreenHelpers.fillPositions();
+        ScreenHelpers.fillRequirements();
+
 
         ScreenVariables.unlockSpellButtons = new Button[]{unlockStompButton, unlockMagiciansRedButton, unlockBloodLettingButton};
         for (Button button : ScreenVariables.unlockSpellButtons)
@@ -332,9 +339,16 @@ public class BizarreWizardryMainScreen extends Screen {
 
             //Iterate through all view spell buttons and set them visible/active
             for (int i = 0 ; i < ScreenVariables.viewSpellButtons.length ; ++i) {
-                ScreenVariables.viewSpellButtons[i].visible = true;
-                ScreenVariables.viewSpellButtons[i].active = true;
+
+                ImageButton currentViewButton = ScreenVariables.viewSpellButtons[i];
+                currentViewButton.visible = true;
+                currentViewButton.active = ScreenHelpers.checkDependencies(currentViewButton);
+
+                ScreenHelpers.setLock(currentViewButton, graphics);
+
             }
+
+
 
 
             //After they are set as visible/active, check to see if they are selected in which case
