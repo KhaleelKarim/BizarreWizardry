@@ -10,12 +10,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.effect.ModEffects;
 import net.raguraccoon.bizarre_wizardry.item.ModItems;
-import net.raguraccoon.bizarre_wizardry.util.Spells;
+import net.raguraccoon.bizarre_wizardry.spell.SpellMethods;
 
 
 public class WandItem extends Item {
@@ -48,15 +47,15 @@ public class WandItem extends Item {
                 //Switch statement to determine which spell should be cast
                 switch (currentSpell) {
                     case "Stomp":
-                        Spells.stomp(level, player);
+                        SpellMethods.stomp(level, player);
                         player.getCooldowns().addCooldown(this, 50);
                         break;
                     case "Magician's Red":
-                        Spells.burn(level, player);
+                        SpellMethods.burn(level, player);
                         player.getCooldowns().addCooldown(this, 10);
                         break;
                     case "Bloodletting":
-                        Spells.bloodletting(level, player);
+                        SpellMethods.bloodletting(level, player);
                         player.getCooldowns().addCooldown(this, 5);
                         break;
                     case "Crystalline Shield":

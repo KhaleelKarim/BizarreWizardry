@@ -1,4 +1,4 @@
-package net.raguraccoon.bizarre_wizardry.util;
+package net.raguraccoon.bizarre_wizardry.spell;
 
 public class SpellInformation {
     

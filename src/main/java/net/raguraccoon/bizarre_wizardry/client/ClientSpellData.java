@@ -17,6 +17,9 @@ public class ClientSpellData {
 
     public static boolean[] spellBooleans = new boolean[spellsLibrary.length - 1];
 
+
+
+
     public static void setMagicalClass(int magicalClass) {
         ClientSpellData.magicalClass = magicalClass;
     }

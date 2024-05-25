@@ -7,8 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.item.ModItems;
-import net.raguraccoon.bizarre_wizardry.item.custom.WandItem;
-import net.raguraccoon.bizarre_wizardry.util.Spells;
 
 import java.util.function.Supplier;
 

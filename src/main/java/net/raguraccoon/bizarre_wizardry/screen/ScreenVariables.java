@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
-import net.raguraccoon.bizarre_wizardry.util.SpellInformation;
+import net.raguraccoon.bizarre_wizardry.spell.SpellInformation;
 
 import java.util.HashMap;
 
@@ -23,14 +23,6 @@ public class ScreenVariables {
 
     public static final Component NO_SPELL_SELECTION_BUTTON =
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.no_spell_selection_button");
-    public static final Component STOMP_SELECTION_BUTTON =
-            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.stomp_selection_button");
-    public static final Component MAGICIANS_RED_SELECTION_BUTTON =
-            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.magicians_red_selection_button");
-    public static final Component BLOODLETTING_SELECTION_BUTTON =
-            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.bloodletting_selection_button");
-    public static final Component CRYSTALLINE_SHIELD_SELECTION_BUTTON =
-            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.crystalline_shield_selection_button");
 
 
 
@@ -52,9 +44,6 @@ public class ScreenVariables {
 
 
 
-
-    //Textures
-
     //Background textures
     public static final ResourceLocation HOME_SCREEN =
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/home_screen.png");
@@ -63,16 +52,6 @@ public class ScreenVariables {
     public static final ResourceLocation NOTORIETY_SCREEN =
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/notoriety_screen.png");
 
-
-    //Spell icon textures
-    public static final ResourceLocation STOMP =
-            SpellHudOverlay.spellPictures[1];
-    public static final ResourceLocation MAGICIANS_RED =
-            SpellHudOverlay.spellPictures[2];
-    public static final ResourceLocation BLOODLETTING =
-            SpellHudOverlay.spellPictures[3];
-    public static final ResourceLocation CRYSTALLINE_SHIELD =
-            SpellHudOverlay.spellPictures[4];
 
 
     //Special textures for soft-locked and hard-locked spells
@@ -117,22 +96,6 @@ public class ScreenVariables {
     //List of buttons to put spells in a specific position
     public static Button[] chooseButtons;
     public static HashMap<Button, Boolean> selectedChooseButtons = new HashMap<>();
-
-
-
-
-
-
-
-    //List of spell requirements
-    public static String[][] spellRequirements =
-            {SpellInformation.STOMP_REQUIREMENTS, SpellInformation.MAGICIANS_RED_REQUIREMENTS,
-                    SpellInformation.BLOODLETTING_REQUIREMENTS, SpellInformation.CRYSTALLINE_SHIELD_REQUIREMENTS};
-
-    //List of spell descriptions
-    public static String[][] spellDescriptions =
-            {SpellInformation.STOMP_DESCRIPTION, SpellInformation.MAGICIANS_RED_DESCRIPTION,
-                    SpellInformation.BLOODLETTING_DESCRIPTION, SpellInformation.CRYSTALLINE_SHIELD_DESCRIPTION};
 
 
 

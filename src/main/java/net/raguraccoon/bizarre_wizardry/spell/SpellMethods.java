@@ -1,10 +1,9 @@
-package net.raguraccoon.bizarre_wizardry.util;
+package net.raguraccoon.bizarre_wizardry.spell;
 
 //Class that has implementation for all spells
 
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,9 +12,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
@@ -24,7 +21,7 @@ import net.raguraccoon.bizarre_wizardry.entity.magicians_red.MagiciansRed;
 import java.util.Random;
 
 
-public class Spells {
+public class SpellMethods {
 
     public static void burn(Level level, Player player) {
 

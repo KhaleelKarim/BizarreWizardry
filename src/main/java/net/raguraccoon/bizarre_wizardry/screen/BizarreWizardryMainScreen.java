@@ -15,6 +15,8 @@ import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.ValidateUnlockC2SPacket;
+import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
+import net.raguraccoon.bizarre_wizardry.spell.BizarreSpells;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -150,7 +152,7 @@ public class BizarreWizardryMainScreen extends Screen {
         //This group of buttons should only appear in the universal screen
         this.stompButton = addRenderableWidget(new ImageButton(this.leftPos + 30, this.topPos + 81,
                 40, 20, 0, 0,
-                1, ScreenVariables.STOMP,40,20, ScreenButtonHandlers::handleViewSpellButton));
+                1, BizarreSpells.STOMP.image, 40,20, ScreenButtonHandlers::handleViewSpellButton));
         this.stompButton.active = false;
         this.stompButton.visible = false;
 
@@ -163,7 +165,7 @@ public class BizarreWizardryMainScreen extends Screen {
 
         this.magiciansRedButton = addRenderableWidget(new ImageButton(this.leftPos + 30, this.topPos + 162,
                 40, 20, 0, 0,
-                1, ScreenVariables.MAGICIANS_RED,40,20, ScreenButtonHandlers::handleViewSpellButton));
+                1, BizarreSpells.MAGICIANS_RED.image, 40,20, ScreenButtonHandlers::handleViewSpellButton));
         this.magiciansRedButton.active = false;
         this.magiciansRedButton.visible = false;
 
@@ -175,7 +177,7 @@ public class BizarreWizardryMainScreen extends Screen {
 
         this.bloodlettingButton = addRenderableWidget(new ImageButton(this.leftPos + 110, this.topPos + 121,
                 40, 20, 0, 0,
-                1, ScreenVariables.BLOODLETTING,40,20, ScreenButtonHandlers::handleViewSpellButton));
+                1, BizarreSpells.BLOODLETTING.image, 40,20, ScreenButtonHandlers::handleViewSpellButton));
         this.bloodlettingButton.active = false;
         this.bloodlettingButton.visible = false;
 
@@ -187,7 +189,7 @@ public class BizarreWizardryMainScreen extends Screen {
 
         this.crystallineShieldButton = addRenderableWidget(new ImageButton(this.leftPos + 190, this.topPos + 121,
                 40, 20, 0, 0,
-                1, ScreenVariables.CRYSTALLINE_SHIELD, 40, 20, ScreenButtonHandlers::handleViewSpellButton));
+                1, BizarreSpells.CRYSTALLINE_SHIELD.image, 40, 20, ScreenButtonHandlers::handleViewSpellButton));
         this.crystallineShieldButton.active = false;
         this.crystallineShieldButton.visible = false;
 
@@ -216,25 +218,25 @@ public class BizarreWizardryMainScreen extends Screen {
 
         this.selectStompButton =
                 addRenderableWidget(Button
-                        .builder(ScreenVariables.STOMP_SELECTION_BUTTON, ScreenButtonHandlers::handleSelectButton)
+                        .builder(BizarreSpells.STOMP.buttonName, ScreenButtonHandlers::handleSelectButton)
                 .bounds(this.leftPos + 150, this.topPos + 50, 100, 20)
                 .build());
 
         this.selectMagiciansRedButton =
                 addRenderableWidget(Button
-                        .builder(ScreenVariables.MAGICIANS_RED_SELECTION_BUTTON, ScreenButtonHandlers::handleSelectButton)
+                        .builder(BizarreSpells.MAGICIANS_RED.buttonName, ScreenButtonHandlers::handleSelectButton)
                 .bounds(this.leftPos + 250, this.topPos + 50, 100, 20)
                 .build());
 
         this.selectBloodlettingButton =
                 addRenderableWidget(Button
-                        .builder(ScreenVariables.BLOODLETTING_SELECTION_BUTTON, ScreenButtonHandlers::handleSelectButton)
+                        .builder(BizarreSpells.BLOODLETTING.buttonName, ScreenButtonHandlers::handleSelectButton)
                 .bounds(this.leftPos + 50, this.topPos + 70, 100, 20)
                 .build());
 
         this.selectCrystallineShieldButton =
                 addRenderableWidget(Button
-                        .builder(ScreenVariables.CRYSTALLINE_SHIELD_SELECTION_BUTTON, ScreenButtonHandlers::handleSelectButton)
+                        .builder(BizarreSpells.CRYSTALLINE_SHIELD.buttonName, ScreenButtonHandlers::handleSelectButton)
                         .bounds(this.leftPos + 150, this.topPos + 70, 100, 20)
                         .build());
 
@@ -376,11 +378,11 @@ public class BizarreWizardryMainScreen extends Screen {
 
             //After they are set as visible/active, check to see if they are selected in which case
             //the proper menu should be displayed!
-            for (int i = 0 ; i < ScreenVariables.viewSpellButtons.length ; ++i) {
+            for (BizarreSpell spell : BizarreSpells.SPELLS_LIBRARY) {
 
-                if (ScreenVariables.selectedViewSpellButtons.get(ScreenVariables.viewSpellButtons[i])) {
+                if (ScreenVariables.selectedViewSpellButtons.get(spell)) {
 
-                    renderSpellScreen(graphics, i);
+                    renderSpellScreen(graphics, spell);
                     ScreenHelpers.hideViewButtons();
 
                     break;
@@ -457,14 +459,14 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
     //Helper method to render screens for unlocking spells
-    private void renderSpellScreen(GuiGraphics graphics, int spellIndex) {
+    private void renderSpellScreen(GuiGraphics graphics, BizarreSpell spell) {
 
         //Get some basic info
-        String[] description = ScreenVariables.spellDescriptions[spellIndex];
-        String[] requirements = ScreenVariables.spellRequirements[spellIndex];
-        ResourceLocation spellImage = SpellHudOverlay.spellPictures[spellIndex + 1];
-        Button unlockButton = ScreenVariables.unlockSpellButtons[spellIndex];
-        String currentSpell = ClientSpellData.spellsLibrary[spellIndex + 1];
+        String[] description = spell.description;
+        String[] requirements = spell.requirements;
+        ResourceLocation spellImage = spell.image;
+        Button unlockButton = spell.unlockButton;
+        String currentSpell = spell.trueName;
 
 
         //Begin by rendering background
@@ -516,7 +518,7 @@ public class BizarreWizardryMainScreen extends Screen {
             ModMessages.sendToServer(new ValidateUnlockC2SPacket(currentSpell));
 
             //If it is, let the user click the button
-            if (ClientSpellData.spellBooleans[spellIndex])
+            if (ClientSpellData.spellBooleans[spell.spellNumber])
                 unlockButton.active = true;
             else //Set it false otherwise
                 unlockButton.active = false;
@@ -562,8 +564,6 @@ public class BizarreWizardryMainScreen extends Screen {
         int offset = 94;
 
         for (int i = 0 ; i < ClientSpellData.currentSpells.length ; ++i) {
-
-            System.out.println(ClientSpellData.currentSpells[i]);
 
             ResourceLocation texture = SpellHudOverlay.spellPictures[ClientSpellData.currentSpells[i]];
 
