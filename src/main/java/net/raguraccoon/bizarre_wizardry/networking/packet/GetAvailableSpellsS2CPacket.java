@@ -1,3 +1,11 @@
+/*
+This packet is sent by SetAvailableSpellsC2SPacket
+to update client information about available spells
+
+The constructor accepts an integer array representing
+available spells.
+ */
+
 package net.raguraccoon.bizarre_wizardry.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;

@@ -1,4 +1,4 @@
-package net.raguraccoon.bizarre_wizardry.current_spells;
+package net.raguraccoon.bizarre_wizardry.capability.current_spells;
 
 import net.minecraft.nbt.CompoundTag;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;

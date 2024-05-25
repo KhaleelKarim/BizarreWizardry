@@ -49,7 +49,7 @@ public class SpellHudOverlay {
 
             CompoundTag tag = wand.getTag();
             int spellChoice = tag.getInt("bizarre_wizardry.spell_number");
-            int activeSpell = ClientSpellData.currentSpells[spellChoice];
+            int activeSpell = ClientSpellData.SPELL_ARSENAL[spellChoice].spellNumber;
 
             switch(activeSpell) {
                 case 0:

@@ -5,9 +5,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.resources.ResourceLocation;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
-import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
+import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
 
 
 public class ScreenHelpers {
@@ -15,17 +14,25 @@ public class ScreenHelpers {
 
     //Helper method to hide view spell buttons
     public static void hideViewButtons() {
-        for (int i = 0 ; i < ScreenVariables.viewSpellButtons.length ; ++i) {
-            ScreenVariables.viewSpellButtons[i].active = false;
-            ScreenVariables.viewSpellButtons[i].visible = false;
+        for (int i = 1 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
+
+            ImageButton currentButton = ClientSpellData.SPELLS_LIBRARY[i].viewButton;
+
+            currentButton.active = false;
+            currentButton.visible = false;
+
         }
     }
 
     //Hide all unlock buttons
     public static void hideUnlockButtons() {
-        for (int i = 0 ; i < ScreenVariables.unlockSpellButtons.length ; ++i) {
-            ScreenVariables.unlockSpellButtons[i].active = false;
-            ScreenVariables.unlockSpellButtons[i].visible = false;
+        for (int i = 1 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
+
+            Button currentButton = ClientSpellData.SPELLS_LIBRARY[i].unlockButton;
+
+            currentButton.active = false;
+            currentButton.visible = false;
+
         }
     }
 
@@ -45,7 +52,8 @@ public class ScreenHelpers {
     //Helper method to see if a spell is unlocked
     public static boolean spellUnlocked(int spellIndex) {
 
-        return ClientSpellData.availableSpells[spellIndex] == 1;
+        BizarreSpell spell = BizarreSpell.spellFromNumber(spellIndex);
+        return spell.available;
 
     }
 
@@ -59,10 +67,13 @@ public class ScreenHelpers {
 
     //Hides all selection buttons
     public static void hideSelectionButtons() {
-        for (int i = 0 ; i < ScreenVariables.selectionButtons.length ; ++i) {
-            ScreenVariables.selectionButtons[i].active = false;
-            ScreenVariables.selectionButtons[i].visible = false;
-            ScreenVariables.selectedSelectionButtons.put(ScreenVariables.selectionButtons[i], false);
+        for (int i = 0 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
+
+            Button currentButton = ClientSpellData.SPELLS_LIBRARY[i].selectButton;
+
+            currentButton.active = false;
+            currentButton.visible = false;
+            ScreenVariables.selectedSelectionButtons.put(currentButton, false);
 
         }
     }
@@ -77,36 +88,21 @@ public class ScreenHelpers {
     }
 
 
-    //Places requirements into hashmap
-    public static void fillRequirements() {
-        ScreenVariables.viewSpellRequirements.put(ScreenVariables.viewSpellButtons[0], new int[]{-1});
-        ScreenVariables.viewSpellRequirements.put(ScreenVariables.viewSpellButtons[1], new int[]{-1});
-        ScreenVariables.viewSpellRequirements.put(ScreenVariables.viewSpellButtons[2], new int[]{1, 2});
-        ScreenVariables.viewSpellRequirements.put(ScreenVariables.viewSpellButtons[3], new int[]{3});
-    }
-
-    //Fills spell positions into hashmap
-    public static void fillPositions() {
-
-        for (int i = 0 ; i < ScreenVariables.viewSpellButtons.length ; ++i)
-            ScreenVariables.spellNumberFromViewButton.put(ScreenVariables.viewSpellButtons[i], i + 1);
-
-    }
 
 
     //Returns true if a spell's dependencies are fulfilled,
     //false otherwise
-    public static boolean checkDependencies(Button button) {
+    public static boolean checkDependencies(BizarreSpell spell) {
 
         //Get the spell's dependencies
-        int[] dependencies = ScreenVariables.viewSpellRequirements.get(button);
+        int[] dependencies = spell.dependencies;
 
         //Iterate thru to see if they are fulfilled
-        for (int spell : dependencies) {
+        for (int i : dependencies) {
 
-            if (spell == -1)
+            if (i == -1)
                 return true;
-            else if (ClientSpellData.availableSpells[spell] != 1)
+            else if (!ClientSpellData.SPELLS_LIBRARY[i].unlockable)
                 return false;
 
         }
@@ -115,22 +111,24 @@ public class ScreenHelpers {
 
     }
 
-    public static void setLock(ImageButton button, GuiGraphics graphics) {
+    public static void setLock(BizarreSpell spell, GuiGraphics graphics) {
+
+        ImageButton button = spell.viewButton;
 
         //Get the button's position
         int leftPos = button.getX();
         int topPos = button.getY();
 
-        int spellNumber = ClientSpellData.availableSpells[ScreenVariables.spellNumberFromViewButton.get(button)];
+        int spellNumber = spell.spellNumber;
 
         //If the button is hard-locked, render lock-icon and darkening effect
-        if (!checkDependencies(button)) {
+        if (!checkDependencies(spell)) {
 
             RenderSystem.setShaderTexture(0, ScreenVariables.HARD_LOCK);
             graphics.blit(ScreenVariables.HARD_LOCK, leftPos + 14, topPos + 25,
                     0, 0, 12, 12, 12, 12);
 
-        } else if (checkDependencies(button) && spellNumber != 1) {
+        } else if (checkDependencies(spell) && !spell.available) {
 
             RenderSystem.setShaderTexture(0, ScreenVariables.SOFT_LOCK);
             graphics.blit(ScreenVariables.SOFT_LOCK, leftPos + 14, topPos + 25,

@@ -1,34 +1,41 @@
+/*
+This packet is called by ValidateUnlockC2SPacket to
+update information on the client side about whether
+a certain spell is unlockable.
+
+This packet accepts an integer corresponding to the
+BizarreSpell that is being updated, and a boolean
+indicating the unlockable status that will be placed
+into the BizarreSpell.
+ */
+
 package net.raguraccoon.bizarre_wizardry.networking.packet;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
-import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
+import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
 
 import java.util.function.Supplier;
 
 public class FinalizeUnlockS2CPacket {
 
-    String spell; //Spell that will be set to true/false
+    int spellNumber; //Spell that will be set to true/false
     boolean unlockable; //Whether the spell is unlockable
 
 
 
-    public FinalizeUnlockS2CPacket(String spell, boolean unlockable) {
-        this.spell = spell;
+    public FinalizeUnlockS2CPacket(int spellNumber, boolean unlockable) {
+        this.spellNumber = spellNumber;
         this.unlockable = unlockable;
     }
 
     public FinalizeUnlockS2CPacket(FriendlyByteBuf buf) {
-        this.spell = buf.readUtf();
+        this.spellNumber = buf.readInt();
         this.unlockable = buf.readBoolean();
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(spell);
+        buf.writeInt(spellNumber);
         buf.writeBoolean(unlockable);
     }
 
@@ -39,25 +46,8 @@ public class FinalizeUnlockS2CPacket {
         context.enqueueWork(() -> {
 
             //Set the appropriate boolean to true
-            switch (spell) {
-
-                case "Stomp":
-                    ClientSpellData.setStomp(unlockable);
-                    break;
-
-                case "Magician's Red":
-                    ClientSpellData.setMagiciansRed(unlockable);
-                    break;
-
-                case "Bloodletting":
-                    ClientSpellData.setBloodletting(unlockable);
-                    break;
-
-                case "Crystalline Shield":
-                    ClientSpellData.setCrystallineShield(unlockable);
-
-
-            }
+            BizarreSpell currentSpell = BizarreSpell.spellFromNumber(spellNumber);
+            currentSpell.unlockable = this.unlockable;
 
         });
 

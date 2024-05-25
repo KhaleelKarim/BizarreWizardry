@@ -3,7 +3,7 @@ package net.raguraccoon.bizarre_wizardry.networking.packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import net.raguraccoon.bizarre_wizardry.magical_class.MagicalClassProvider;
+import net.raguraccoon.bizarre_wizardry.capability.magical_class.MagicalClassProvider;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 
 import java.util.function.Supplier;

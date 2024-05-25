@@ -41,8 +41,8 @@ public class WandItem extends Item {
 
                 //Get the wand's current spell number
                 int currentSpellNumber = wand.getTag().getInt("bizarre_wizardry.spell_number");
-                int spellIndex = ClientSpellData.currentSpells[currentSpellNumber];
-                String currentSpell = ClientSpellData.spellsLibrary[spellIndex];
+                int spellIndex = ClientSpellData.SPELL_ARSENAL[currentSpellNumber].spellNumber;
+                String currentSpell = ClientSpellData.SPELLS_LIBRARY[spellIndex].trueName;
 
                 //Switch statement to determine which spell should be cast
                 switch (currentSpell) {

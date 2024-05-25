@@ -1,9 +1,17 @@
+/*
+This packet sets a BizarreSpell as available
+to place into the player's arsenal.
+
+The constructor accepts an integer corresponding
+to the BizarreSpell that will become available
+ */
+
 package net.raguraccoon.bizarre_wizardry.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import net.raguraccoon.bizarre_wizardry.available_spells.AvailableSpellsProvider;
+import net.raguraccoon.bizarre_wizardry.capability.available_spells.AvailableSpellsProvider;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 
 

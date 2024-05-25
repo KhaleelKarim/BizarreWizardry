@@ -1,10 +1,23 @@
+/*
+This packet changes one of the spells in
+your current arsenal
+
+It accepts an array consisting of two integers
+The first integer corresponds to the BizarreSpell
+that will be added to the player's arsenal
+
+The second integer is the position in the player's
+arsenal that the spell will be placed.
+ */
+
 package net.raguraccoon.bizarre_wizardry.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import net.raguraccoon.bizarre_wizardry.current_spells.CurrentSpellsProvider;
+import net.raguraccoon.bizarre_wizardry.capability.current_spells.CurrentSpellsProvider;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
+import net.raguraccoon.bizarre_wizardry.networking.packet.GetCurrentSpellsS2CPacket;
 
 import java.util.function.Supplier;
 

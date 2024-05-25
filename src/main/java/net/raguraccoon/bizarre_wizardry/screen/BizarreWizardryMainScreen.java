@@ -155,12 +155,14 @@ public class BizarreWizardryMainScreen extends Screen {
                 1, BizarreSpells.STOMP.image, 40,20, ScreenButtonHandlers::handleViewSpellButton));
         this.stompButton.active = false;
         this.stompButton.visible = false;
-
+        BizarreSpells.STOMP.setViewButton(this.stompButton);
 
 
         this.unlockStompButton = addRenderableWidget(makeUnlockButton(ScreenButtonHandlers::handleUnlockButton));
         this.unlockStompButton.active = false;
         this.unlockStompButton.visible = false;
+        BizarreSpells.STOMP.setUnlockButton(this.unlockStompButton);
+
 
 
         this.magiciansRedButton = addRenderableWidget(new ImageButton(this.leftPos + 30, this.topPos + 162,
@@ -168,11 +170,14 @@ public class BizarreWizardryMainScreen extends Screen {
                 1, BizarreSpells.MAGICIANS_RED.image, 40,20, ScreenButtonHandlers::handleViewSpellButton));
         this.magiciansRedButton.active = false;
         this.magiciansRedButton.visible = false;
+        BizarreSpells.MAGICIANS_RED.setViewButton(this.magiciansRedButton);
 
 
         this.unlockMagiciansRedButton = addRenderableWidget(makeUnlockButton(ScreenButtonHandlers::handleUnlockButton));
         this.unlockMagiciansRedButton.active = false;
         this.unlockMagiciansRedButton.visible = false;
+        BizarreSpells.MAGICIANS_RED.setUnlockButton(this.unlockMagiciansRedButton);
+
 
 
         this.bloodlettingButton = addRenderableWidget(new ImageButton(this.leftPos + 110, this.topPos + 121,
@@ -180,11 +185,14 @@ public class BizarreWizardryMainScreen extends Screen {
                 1, BizarreSpells.BLOODLETTING.image, 40,20, ScreenButtonHandlers::handleViewSpellButton));
         this.bloodlettingButton.active = false;
         this.bloodlettingButton.visible = false;
+        BizarreSpells.BLOODLETTING.setViewButton(this.bloodlettingButton);
 
 
         this.unlockBloodLettingButton = addRenderableWidget(makeUnlockButton(ScreenButtonHandlers::handleUnlockButton));
         this.unlockBloodLettingButton.active = false;
         this.unlockBloodLettingButton.visible = false;
+        BizarreSpells.BLOODLETTING.setUnlockButton(this.unlockBloodLettingButton);
+
 
 
         this.crystallineShieldButton = addRenderableWidget(new ImageButton(this.leftPos + 190, this.topPos + 121,
@@ -192,11 +200,14 @@ public class BizarreWizardryMainScreen extends Screen {
                 1, BizarreSpells.CRYSTALLINE_SHIELD.image, 40, 20, ScreenButtonHandlers::handleViewSpellButton));
         this.crystallineShieldButton.active = false;
         this.crystallineShieldButton.visible = false;
+        BizarreSpells.CRYSTALLINE_SHIELD.setViewButton(this.crystallineShieldButton);
 
 
         this.unlockCrystallineShieldButton = addRenderableWidget(makeUnlockButton(ScreenButtonHandlers::handleUnlockButton));
         this.unlockCrystallineShieldButton.active = false;
         this.unlockCrystallineShieldButton.visible = false;
+        BizarreSpells.CRYSTALLINE_SHIELD.setUnlockButton(this.unlockCrystallineShieldButton);
+
 
 
         //Button to remove all spells from current spells list
@@ -212,34 +223,42 @@ public class BizarreWizardryMainScreen extends Screen {
         //Buttons to place a spell into current spells array
         this.selectNoSpellButton =
                 addRenderableWidget(Button
-                        .builder(ScreenVariables.NO_SPELL_SELECTION_BUTTON, ScreenButtonHandlers::handleSelectNoSpellButton)
+                        .builder(BizarreSpells.NO_SPELL.buttonName, ScreenButtonHandlers::handleSelectNoSpellButton)
                 .bounds(this.leftPos + 50, this.topPos + 50, 100, 20)
                 .build());
+        BizarreSpells.NO_SPELL.setSelectButton(this.selectNoSpellButton);
+
 
         this.selectStompButton =
                 addRenderableWidget(Button
                         .builder(BizarreSpells.STOMP.buttonName, ScreenButtonHandlers::handleSelectButton)
                 .bounds(this.leftPos + 150, this.topPos + 50, 100, 20)
                 .build());
+        BizarreSpells.STOMP.setSelectButton(this.selectStompButton);
+
 
         this.selectMagiciansRedButton =
                 addRenderableWidget(Button
                         .builder(BizarreSpells.MAGICIANS_RED.buttonName, ScreenButtonHandlers::handleSelectButton)
                 .bounds(this.leftPos + 250, this.topPos + 50, 100, 20)
                 .build());
+        BizarreSpells.MAGICIANS_RED.setSelectButton(this.selectMagiciansRedButton);
+
 
         this.selectBloodlettingButton =
                 addRenderableWidget(Button
                         .builder(BizarreSpells.BLOODLETTING.buttonName, ScreenButtonHandlers::handleSelectButton)
                 .bounds(this.leftPos + 50, this.topPos + 70, 100, 20)
                 .build());
+        BizarreSpells.BLOODLETTING.setSelectButton(this.selectBloodlettingButton);
+
 
         this.selectCrystallineShieldButton =
                 addRenderableWidget(Button
                         .builder(BizarreSpells.CRYSTALLINE_SHIELD.buttonName, ScreenButtonHandlers::handleSelectButton)
                         .bounds(this.leftPos + 150, this.topPos + 70, 100, 20)
                         .build());
-
+        BizarreSpells.CRYSTALLINE_SHIELD.setSelectButton(this.selectCrystallineShieldButton);
 
 
 
@@ -265,37 +284,49 @@ public class BizarreWizardryMainScreen extends Screen {
         for (Button button : ScreenVariables.menuButtons)
             ScreenVariables.selectedMenuButtons.put(button, false);
 
-        ScreenVariables.viewSpellButtons = new ImageButton[]{stompButton, magiciansRedButton, bloodlettingButton,
-                                                            crystallineShieldButton};
-        for (Button button : ScreenVariables.viewSpellButtons)
-            ScreenVariables.selectedViewSpellButtons.put(button, false);
 
-        ScreenHelpers.fillPositions();
-        ScreenHelpers.fillRequirements();
+        ScreenVariables.selectedSelectionButtons.put(BizarreSpells.NO_SPELL.selectButton, false);
+        ScreenVariables.spellNumberSelectionButtons.put(BizarreSpells.NO_SPELL.selectButton, 0);
+
+        BizarreSpells.NO_SPELL.selectButton.active = false;
+        BizarreSpells.NO_SPELL.selectButton.visible = false;
 
 
-        ScreenVariables.unlockSpellButtons = new Button[]{unlockStompButton, unlockMagiciansRedButton, unlockBloodLettingButton,
-                                                        unlockCrystallineShieldButton};
-        for (Button button : ScreenVariables.unlockSpellButtons)
-            ScreenVariables.selectedUnlockSpellButtons.put(button, false);
-        for (int i = 0 ; i < ScreenVariables.unlockSpellButtons.length ; ++i)
-            ScreenVariables.unlockSpellButtonsPosition.put(ScreenVariables.unlockSpellButtons[i], i + 1);
+        for (int i = 1 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
+
+            BizarreSpell currentSpell = ClientSpellData.SPELLS_LIBRARY[i];
+
+            ScreenVariables.selectedViewSpellButtons.put(currentSpell.viewButton, false);
+
+            ScreenVariables.selectedUnlockSpellButtons.put(currentSpell.unlockButton, false);
+            ScreenVariables.unlockSpellButtonsPosition.put(currentSpell.unlockButton, i);
+
+            ScreenVariables.selectedSelectionButtons.put(currentSpell.selectButton, false);
+            ScreenVariables.spellNumberSelectionButtons.put(currentSpell.selectButton, i);
+
+
+
+            currentSpell.viewButton.active = false;
+            currentSpell.viewButton.visible = false;
+
+            currentSpell.unlockButton.active = false;
+            currentSpell.unlockButton.visible = false;
+
+            currentSpell.selectButton.active = false;
+            currentSpell.selectButton.visible = false;
+
+        }
+
+
+
 
 
         ScreenVariables.backButtons = new Button[]{backToUniversal, backToSpellSelection, backToNotoriety};
         for (Button button : ScreenVariables.backButtons)
             ScreenVariables.selectedBackButtons.put(button, false);
 
-        ScreenVariables.selectionButtons = new Button[]{selectNoSpellButton, selectStompButton, selectMagiciansRedButton,
-                                                        selectBloodlettingButton, selectCrystallineShieldButton};
-
-        for (int i = 0 ; i < ScreenVariables.selectionButtons.length ; ++i) {
-            ScreenVariables.selectedSelectionButtons.put(ScreenVariables.selectionButtons[i], false);
-            ScreenVariables.spellNumberSelectionButtons.put(ScreenVariables.selectionButtons[i], i);
-        }
 
         ScreenVariables.positionToPlaceSpell = 0;
-
 
 
 
@@ -306,22 +337,10 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
         //Initializing the appropriate ones to invisible/inactive right away
-        for (int i = 0 ; i < ScreenVariables.viewSpellButtons.length ; ++i) {
-            ScreenVariables.viewSpellButtons[i].active = false;
-            ScreenVariables.viewSpellButtons[i].visible = false;
-
-            ScreenVariables.unlockSpellButtons[i].active = false;
-            ScreenVariables.unlockSpellButtons[i].visible = false;
-        }
 
         for (int i = 0 ; i < ScreenVariables.backButtons.length ; ++i) {
             ScreenVariables.backButtons[i].active = false;
             ScreenVariables.backButtons[i].visible = false;
-        }
-
-        for (int i = 0 ; i < ScreenVariables.selectionButtons.length ; ++i) {
-            ScreenVariables.selectionButtons[i].active = false;
-            ScreenVariables.selectionButtons[i].visible = false;
         }
 
         for (int i = 0 ; i < ScreenVariables.chooseButtons.length ; ++i) {
@@ -363,13 +382,14 @@ public class BizarreWizardryMainScreen extends Screen {
             ScreenHelpers.hideChangeButtons();
 
             //Iterate through all view spell buttons and set them visible/active
-            for (int i = 0 ; i < ScreenVariables.viewSpellButtons.length ; ++i) {
+            for (int i = 1 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
 
-                ImageButton currentViewButton = ScreenVariables.viewSpellButtons[i];
+                BizarreSpell currentSpell = ClientSpellData.SPELLS_LIBRARY[i];
+                ImageButton currentViewButton = currentSpell.viewButton;
                 currentViewButton.visible = true;
-                currentViewButton.active = ScreenHelpers.checkDependencies(currentViewButton);
+                currentViewButton.active = ScreenHelpers.checkDependencies(currentSpell);
 
-                ScreenHelpers.setLock(currentViewButton, graphics);
+                ScreenHelpers.setLock(currentSpell, graphics);
 
             }
 
@@ -378,11 +398,13 @@ public class BizarreWizardryMainScreen extends Screen {
 
             //After they are set as visible/active, check to see if they are selected in which case
             //the proper menu should be displayed!
-            for (BizarreSpell spell : BizarreSpells.SPELLS_LIBRARY) {
+            for (int i = 1 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
 
-                if (ScreenVariables.selectedViewSpellButtons.get(spell)) {
+                BizarreSpell currentSpell = ClientSpellData.SPELLS_LIBRARY[i];
 
-                    renderSpellScreen(graphics, spell);
+                if (ScreenVariables.selectedViewSpellButtons.get(currentSpell.viewButton)) {
+
+                    renderSpellScreen(graphics, currentSpell);
                     ScreenHelpers.hideViewButtons();
 
                     break;
@@ -409,7 +431,7 @@ public class BizarreWizardryMainScreen extends Screen {
                 if (ScreenVariables.selectedChooseButtons.get(ScreenVariables.chooseButtons[i])) {
 
                     //Display the appropriate screen
-                    displaySelectionSpellButtons(graphics, ClientSpellData.currentSpells[i]);
+                    displaySelectionSpellButtons(graphics, ClientSpellData.SPELL_ARSENAL[i].spellNumber);
 
                     //Display back button
                     backToSpellSelection.active = true;
@@ -510,15 +532,15 @@ public class BizarreWizardryMainScreen extends Screen {
         unlockButton.active = false;
 
         //If the spell is unlocked, don't let the player click it anymore
-        if (ClientSpellData.availableSpells[ScreenVariables.unlockSpellButtonsPosition.get(unlockButton)] == 1) {
+        if (spell.available) {
             unlockButton.active = false;
         } else {
 
             //Check if the spell is unlockable
-            ModMessages.sendToServer(new ValidateUnlockC2SPacket(currentSpell));
+            ModMessages.sendToServer(new ValidateUnlockC2SPacket(spell.spellNumber));
 
             //If it is, let the user click the button
-            if (ClientSpellData.spellBooleans[spell.spellNumber])
+            if (spell.unlockable)
                 unlockButton.active = true;
             else //Set it false otherwise
                 unlockButton.active = false;
@@ -563,9 +585,10 @@ public class BizarreWizardryMainScreen extends Screen {
 
         int offset = 94;
 
-        for (int i = 0 ; i < ClientSpellData.currentSpells.length ; ++i) {
+        for (int i = 0 ; i < ClientSpellData.SPELL_ARSENAL.length ; ++i) {
 
-            ResourceLocation texture = SpellHudOverlay.spellPictures[ClientSpellData.currentSpells[i]];
+            BizarreSpell currentSpell = ClientSpellData.SPELL_ARSENAL[i];
+            ResourceLocation texture = currentSpell.image;
 
             RenderSystem.setShaderTexture(0, texture);
             graphics.blit(texture, this.leftPos + offset, this.topPos + 130, 0, 0, 40, 20, 40, 20);
@@ -589,19 +612,23 @@ public class BizarreWizardryMainScreen extends Screen {
         RenderSystem.setShaderTexture(0, ScreenVariables.FILLER);
         graphics.blit(ScreenVariables.FILLER, this.leftPos + 7, this.topPos + 20, 0, 0, 486, 223, 486, 223);
 
-        for (int i = 0 ; i < ScreenVariables.selectionButtons.length ; ++i) {
+        for (int i = 0 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
+
+            Button currentSelectionButton = ClientSpellData.SPELLS_LIBRARY[i].selectButton;
 
             //Make all visible
-            ScreenVariables.selectionButtons[i].visible = true;
+            currentSelectionButton.visible = true;
 
             //Only unlocked ones should be clickable
             if (ScreenHelpers.spellUnlocked(i))
-                ScreenVariables.selectionButtons[i].active = true;
+                currentSelectionButton.active = true;
+            else
+                currentSelectionButton.active = false;
 
         }
 
         //The no spell should always be clickable
-        ScreenVariables.selectionButtons[0].active = true;
+        BizarreSpells.NO_SPELL.selectButton.active = true;
 
 
         //Display image of spell we are going to change

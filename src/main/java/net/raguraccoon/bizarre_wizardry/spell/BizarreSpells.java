@@ -10,7 +10,7 @@ public class BizarreSpells {
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/spell/no_spell.png"),
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.no_spell_selection_button"),
             null, null,
-            "No Spell", false, null, false, null, null, null
+            "No Spell", false, new int[]{-1}, false, null, null, null
             );
 
     public static BizarreSpell STOMP = new BizarreSpell(1,
@@ -43,7 +43,6 @@ public class BizarreSpells {
 
 
 
-    public static BizarreSpell[] SPELLS_LIBRARY = {STOMP, MAGICIANS_RED, BLOODLETTING, CRYSTALLINE_SHIELD};
 
 
 }

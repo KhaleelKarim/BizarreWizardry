@@ -1,4 +1,4 @@
-package net.raguraccoon.bizarre_wizardry.magical_class;
+package net.raguraccoon.bizarre_wizardry.capability.current_spells;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -11,27 +11,31 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MagicalClassProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class CurrentSpellsProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<MagicalClass> MAGICAL_CLASS = CapabilityManager.get(new CapabilityToken<MagicalClass>() {});
 
-    private MagicalClass magicalClass = null;
+    public static Capability<CurrentSpells> CURRENT_SPELLS = CapabilityManager.get(new CapabilityToken<CurrentSpells>() {});
 
-    private final LazyOptional<MagicalClass> optional = LazyOptional.of(this::createMagicalClass);
+    private CurrentSpells CurrentSpells = null;
 
-    private MagicalClass createMagicalClass() {
-        if (this.magicalClass == null) {
-            this.magicalClass = new MagicalClass();
-        }
-        return this.magicalClass;
+    private final LazyOptional<CurrentSpells> optional = LazyOptional.of(this::createCurrentSpells);
+
+
+
+    private CurrentSpells createCurrentSpells() {
+
+        if (this.CurrentSpells == null)
+            this.CurrentSpells = new CurrentSpells();
+
+        return this.CurrentSpells;
 
     }
 
+
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction direction) {
-        if (capability == MAGICAL_CLASS) {
+        if (capability == CURRENT_SPELLS)
             return optional.cast();
-        }
 
         return LazyOptional.empty();
     }
@@ -39,13 +43,13 @@ public class MagicalClassProvider implements ICapabilityProvider, INBTSerializab
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        createMagicalClass().saveNBTData(nbt);
+        createCurrentSpells().saveNBTData(nbt);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        createMagicalClass().loadNBTData(nbt);
+        createCurrentSpells().loadNBTData(nbt);
     }
 
 }

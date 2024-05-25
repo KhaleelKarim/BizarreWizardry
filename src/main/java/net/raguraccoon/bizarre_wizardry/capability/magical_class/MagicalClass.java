@@ -1,4 +1,4 @@
-package net.raguraccoon.bizarre_wizardry.magical_class;
+package net.raguraccoon.bizarre_wizardry.capability.magical_class;
 
 import net.minecraft.nbt.CompoundTag;
 

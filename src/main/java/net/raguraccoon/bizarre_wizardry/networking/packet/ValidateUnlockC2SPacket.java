@@ -1,3 +1,12 @@
+/*
+This packet is sent to check to determine whether a
+spell is unlockable or not. i.e. If the requirements
+for unlocking the spell have been fulfilled.
+
+The packet accepts an integer corresponding to the
+BizarreSpell that is being checked.
+ */
+
 package net.raguraccoon.bizarre_wizardry.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -5,24 +14,25 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
+import net.raguraccoon.bizarre_wizardry.networking.packet.FinalizeUnlockS2CPacket;
 import net.raguraccoon.bizarre_wizardry.statistics.PlayerStatsGetter;
 
 import java.util.function.Supplier;
 
 public class ValidateUnlockC2SPacket {
 
-    String spell;
+    int spellNumber;
 
-    public ValidateUnlockC2SPacket(String spell) {
-        this.spell = spell;
+    public ValidateUnlockC2SPacket(int spellNumber) {
+        this.spellNumber = spellNumber;
     }
 
     public ValidateUnlockC2SPacket(FriendlyByteBuf buf) {
-        spell = buf.readUtf();
+        spellNumber = buf.readInt();
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(spell);
+        buf.writeInt(spellNumber);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
@@ -35,21 +45,21 @@ public class ValidateUnlockC2SPacket {
 
 
             //Check for appropriate requirements
-            switch (spell) {
+            switch (spellNumber) {
 
-                case "Stomp":
+                case 1:
                     spellUnlockable = statsGetter.unlockedStomp();
                     break;
 
-                case "Magician's Red":
+                case 2:
                     spellUnlockable = statsGetter.unlockedMagiciansRed();
                     break;
 
-                case "Bloodletting":
+                case 3:
                     spellUnlockable = statsGetter.unlockedBloodletting();
                     break;
 
-                case "Crystalline Shield":
+                case 4:
                     spellUnlockable = statsGetter.unlockedCrystallineShield();
                     break;
 
@@ -59,7 +69,7 @@ public class ValidateUnlockC2SPacket {
             }
 
             //Update info on client side
-            ModMessages.sendToPlayer(new FinalizeUnlockS2CPacket(spell, spellUnlockable), player);
+            ModMessages.sendToPlayer(new FinalizeUnlockS2CPacket(spellNumber, spellUnlockable), player);
 
         });
         return true;

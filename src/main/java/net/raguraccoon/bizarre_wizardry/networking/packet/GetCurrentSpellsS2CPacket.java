@@ -1,3 +1,12 @@
+/*
+This packet is sent by SetCurrentSpellsC2SPacket
+to update client information about the spells
+in the player's arsenal.
+
+It accepts an array of integers representing the
+player's arsenal.
+ */
+
 package net.raguraccoon.bizarre_wizardry.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;

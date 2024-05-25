@@ -4,6 +4,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 
 
 /*
@@ -18,6 +19,7 @@ unlockable  : Whether the spell's requirement has been fulfilled
 dependencies: A list of integers that contain spellNumbers. Each
               spellNumber refers to a spell that must be unlocked
               before this one can be unlocked
+available   : If the spell is available to be put into arsenal
 viewButton  : ImageButton object to view the spell in main screen
 unlockButton: Button object to unlock spell
 selectButton: Button object to place spell in current arsenal
@@ -57,4 +59,40 @@ public class BizarreSpell {
 
     }
 
+    public static BizarreSpell spellFromNumber(int spellNumber) {
+
+        return ClientSpellData.SPELLS_LIBRARY[spellNumber];
+
+    }
+
+    public void setUnlockable(boolean unlockable) {
+        this.unlockable = unlockable;
+        ClientSpellData.SPELLS_LIBRARY[this.spellNumber].unlockable = unlockable;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+        ClientSpellData.SPELLS_LIBRARY[this.spellNumber].available = available;
+    }
+
+    public void setViewButton(ImageButton viewButton) {
+        this.viewButton = viewButton;
+        ClientSpellData.SPELLS_LIBRARY[this.spellNumber].viewButton = viewButton;
+    }
+
+    public void setUnlockButton(Button unlockButton) {
+        this.unlockButton = unlockButton;
+        ClientSpellData.SPELLS_LIBRARY[this.spellNumber].unlockButton = unlockButton;
+    }
+
+    public void setSelectButton(Button selectButton) {
+        this.selectButton = selectButton;
+        ClientSpellData.SPELLS_LIBRARY[this.spellNumber].selectButton = selectButton;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        BizarreSpell spell = (BizarreSpell) obj;
+        return this.spellNumber == spell.spellNumber;
+    }
 }

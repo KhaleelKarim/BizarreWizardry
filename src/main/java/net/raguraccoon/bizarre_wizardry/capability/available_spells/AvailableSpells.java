@@ -1,14 +1,18 @@
-package net.raguraccoon.bizarre_wizardry.available_spells;
+package net.raguraccoon.bizarre_wizardry.capability.available_spells;
 
 import net.minecraft.nbt.CompoundTag;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 
+
 public class AvailableSpells {
 
-    //The integer list of available spells is as long as the list of all possible spells
-    //It contains only 1's and 0's
-    //1 meaning the spell at that index is unlocked and 0 meaning the opposite
-    private int[] availableSpells = new int[ClientSpellData.spellsLibrary.length];
+    /*
+    List of integers which is the same length of the spell library
+    The arrays are parallel which means element 3 of this array corresponds
+    to element 3 of the spell library. If the value in this array is 0,
+    the spell is not available. If it is 1, the spell is available.
+     */
+    private int[] availableSpells = new int[ClientSpellData.SPELLS_LIBRARY.length];
 
 
     public int[] getAvailableSpells() {

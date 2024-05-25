@@ -1,6 +1,5 @@
 package net.raguraccoon.bizarre_wizardry.event;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -15,12 +14,12 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
-import net.raguraccoon.bizarre_wizardry.available_spells.AvailableSpells;
-import net.raguraccoon.bizarre_wizardry.available_spells.AvailableSpellsProvider;
-import net.raguraccoon.bizarre_wizardry.current_spells.CurrentSpells;
-import net.raguraccoon.bizarre_wizardry.current_spells.CurrentSpellsProvider;
-import net.raguraccoon.bizarre_wizardry.magical_class.MagicalClass;
-import net.raguraccoon.bizarre_wizardry.magical_class.MagicalClassProvider;
+import net.raguraccoon.bizarre_wizardry.capability.available_spells.AvailableSpells;
+import net.raguraccoon.bizarre_wizardry.capability.available_spells.AvailableSpellsProvider;
+import net.raguraccoon.bizarre_wizardry.capability.current_spells.CurrentSpells;
+import net.raguraccoon.bizarre_wizardry.capability.current_spells.CurrentSpellsProvider;
+import net.raguraccoon.bizarre_wizardry.capability.magical_class.MagicalClass;
+import net.raguraccoon.bizarre_wizardry.capability.magical_class.MagicalClassProvider;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.GetAvailableSpellsS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.GetCurrentSpellsS2CPacket;
