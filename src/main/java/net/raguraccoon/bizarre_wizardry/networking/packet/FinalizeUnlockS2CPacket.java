@@ -53,6 +53,9 @@ public class FinalizeUnlockS2CPacket {
                     ClientSpellData.setBloodletting(unlockable);
                     break;
 
+                case "Crystalline Shield":
+                    ClientSpellData.setCrystallineShield(unlockable);
+
 
             }
 

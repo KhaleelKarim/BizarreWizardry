@@ -6,17 +6,16 @@ public class ClientSpellData {
     public static boolean stomp;
     public static boolean magiciansRed;
     public static boolean bloodletting;
-
-    public static boolean[] spellBooleans = new boolean[3];
-
+    public static boolean crystallineShield;
 
     private static int magicalClass;
     private static int spellCapacity = 3;
 
-    public static String[] spellsLibrary = {"No Spell", "Stomp", "Magician's Red", "Bloodletting", "Overgrowth"};
+    public static String[] spellsLibrary = {"No Spell", "Stomp", "Magician's Red", "Bloodletting", "Crystalline Shield"};
     public static int[] availableSpells = new int[spellsLibrary.length];
     public static int[] currentSpells = new int[spellCapacity];
 
+    public static boolean[] spellBooleans = new boolean[spellsLibrary.length - 1];
 
     public static void setMagicalClass(int magicalClass) {
         ClientSpellData.magicalClass = magicalClass;
@@ -53,13 +52,16 @@ public class ClientSpellData {
 
 
     public static void setStomp(boolean b) {
-        ClientSpellData.spellBooleans = new boolean[]{b, magiciansRed, bloodletting};
+        ClientSpellData.spellBooleans = new boolean[]{b, magiciansRed, bloodletting, crystallineShield};
     }
 
     public static void setMagiciansRed(boolean b) {
-        ClientSpellData.spellBooleans = new boolean[]{stomp, b, bloodletting};    }
+        ClientSpellData.spellBooleans = new boolean[]{stomp, b, bloodletting, crystallineShield};    }
 
     public static void setBloodletting(boolean b) {
-        ClientSpellData.spellBooleans = new boolean[]{stomp, magiciansRed, b};    }
+        ClientSpellData.spellBooleans = new boolean[]{stomp, magiciansRed, b, crystallineShield};    }
+
+    public static void setCrystallineShield(boolean b) {
+        ClientSpellData.spellBooleans = new boolean[]{stomp, magiciansRed, bloodletting, b};    }
 
 }

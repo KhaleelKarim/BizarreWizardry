@@ -29,6 +29,9 @@ public class ScreenVariables {
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.magicians_red_selection_button");
     public static final Component BLOODLETTING_SELECTION_BUTTON =
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.bloodletting_selection_button");
+    public static final Component CRYSTALLINE_SHIELD_SELECTION_BUTTON =
+            Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.crystalline_shield_selection_button");
+
 
 
     public static final Component RESET_BUTTON =
@@ -68,6 +71,8 @@ public class ScreenVariables {
             SpellHudOverlay.spellPictures[2];
     public static final ResourceLocation BLOODLETTING =
             SpellHudOverlay.spellPictures[3];
+    public static final ResourceLocation CRYSTALLINE_SHIELD =
+            SpellHudOverlay.spellPictures[4];
 
 
     //Special textures for soft-locked and hard-locked spells
@@ -122,12 +127,12 @@ public class ScreenVariables {
     //List of spell requirements
     public static String[][] spellRequirements =
             {SpellInformation.STOMP_REQUIREMENTS, SpellInformation.MAGICIANS_RED_REQUIREMENTS,
-                    SpellInformation.BLOODLETTING_REQUIREMENTS};
+                    SpellInformation.BLOODLETTING_REQUIREMENTS, SpellInformation.CRYSTALLINE_SHIELD_REQUIREMENTS};
 
     //List of spell descriptions
     public static String[][] spellDescriptions =
             {SpellInformation.STOMP_DESCRIPTION, SpellInformation.MAGICIANS_RED_DESCRIPTION,
-                    SpellInformation.BLOODLETTING_DESCRIPTION};
+                    SpellInformation.BLOODLETTING_DESCRIPTION, SpellInformation.CRYSTALLINE_SHIELD_DESCRIPTION};
 
 
 

@@ -1,14 +1,14 @@
 package net.raguraccoon.bizarre_wizardry.statistics;
 
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.phys.Vec3;
+
 
 /*
 Class that needs to be instantiated with a player and tells
@@ -51,6 +51,33 @@ public class PlayerStatsGetter {
         int spiderEyesEaten = player.getStats().getValue(spiderEyeEatenStat);
 
         return spiderEyesEaten >= 1;
+
+    }
+
+    //Has the player unlocked Crystalline Shield?
+    public boolean unlockedCrystallineShield() {
+
+        Inventory inventory = player.getInventory();
+
+        //Iterate through all inventory slots
+        for (int i = 0 ; i < inventory.getContainerSize() ; ++i) {
+
+            //Get the current item and check if it is stone
+            ItemStack currentItem = inventory.getItem(i);
+            if (currentItem.is(Items.GLASS)) {
+
+                //If it is stone, then get the count to make sure it is enough
+                int count = currentItem.getCount();
+
+                if (count >= 64) {
+                    return true;
+                }
+
+            }
+
+        }
+
+        return false;
 
     }
 

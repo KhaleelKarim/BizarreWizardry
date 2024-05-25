@@ -82,6 +82,7 @@ public class ScreenHelpers {
         ScreenVariables.viewSpellRequirements.put(ScreenVariables.viewSpellButtons[0], new int[]{-1});
         ScreenVariables.viewSpellRequirements.put(ScreenVariables.viewSpellButtons[1], new int[]{-1});
         ScreenVariables.viewSpellRequirements.put(ScreenVariables.viewSpellButtons[2], new int[]{1, 2});
+        ScreenVariables.viewSpellRequirements.put(ScreenVariables.viewSpellButtons[3], new int[]{3});
     }
 
     //Fills spell positions into hashmap

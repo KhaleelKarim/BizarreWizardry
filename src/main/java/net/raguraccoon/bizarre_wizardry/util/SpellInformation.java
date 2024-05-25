@@ -21,6 +21,13 @@ public class SpellInformation {
                     "bloodletting_description_line_two"};
     public static final String[] BLOODLETTING_REQUIREMENTS =
             {"bloodletting_requirements_line_one"};
+
+
+    public static final String[] CRYSTALLINE_SHIELD_DESCRIPTION =
+            {"crystalline_shield_description_line_one",
+                    "crystalline_shield_description_line_two"};
+    public static final String[] CRYSTALLINE_SHIELD_REQUIREMENTS =
+            {"crystalline_shield_requirements_line_one"};
     
     
 }

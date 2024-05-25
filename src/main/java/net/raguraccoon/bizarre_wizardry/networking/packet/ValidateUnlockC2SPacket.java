@@ -49,6 +49,10 @@ public class ValidateUnlockC2SPacket {
                     spellUnlockable = statsGetter.unlockedBloodletting();
                     break;
 
+                case "Crystalline Shield":
+                    spellUnlockable = statsGetter.unlockedCrystallineShield();
+                    break;
+
                 default:
                     player.sendSystemMessage(Component.literal("Whoops!"));
 

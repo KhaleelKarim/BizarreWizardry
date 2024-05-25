@@ -2,12 +2,16 @@ package net.raguraccoon.bizarre_wizardry.event;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -15,12 +19,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
+import net.raguraccoon.bizarre_wizardry.effect.ModEffects;
 import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
 import net.raguraccoon.bizarre_wizardry.entity.magicians_red.MagiciansRedRenderer;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.SwitchSpellC2SPacket;
 import net.raguraccoon.bizarre_wizardry.screen.BizarreWizardryMainScreen;
 import net.raguraccoon.bizarre_wizardry.util.KeyBinding;
+
+import java.util.ArrayList;
 
 
 public class ClientEvents {
@@ -37,6 +44,29 @@ public class ClientEvents {
                 DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().setScreen(new BizarreWizardryMainScreen()));
             }
         }
+
+
+        @SubscribeEvent
+        public static void onPlayerHurt(LivingHurtEvent event) {
+
+            if (event.getEntity() instanceof Player) {
+
+                Player player = (Player) event.getEntity();
+                float damage = event.getAmount();
+
+
+                //Check if player has the effect
+                if (player.hasEffect(ModEffects.CRYSTALLINE_SHIELD.get())) {
+
+                    event.setCanceled(true);
+                    player.removeEffect(ModEffects.CRYSTALLINE_SHIELD.get());
+
+                }
+
+            }
+
+        }
+
     }
     @Mod.EventBusSubscriber(modid = BizarreWizardry.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientModBusEvents {

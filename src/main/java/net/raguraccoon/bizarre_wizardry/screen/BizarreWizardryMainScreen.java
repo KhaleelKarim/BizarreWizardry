@@ -45,6 +45,7 @@ public class BizarreWizardryMainScreen extends Screen {
     private ImageButton stompButton;
     private ImageButton magiciansRedButton;
     private ImageButton bloodlettingButton;
+    private ImageButton crystallineShieldButton;
     private ImageButton resetButton;
 
 
@@ -52,6 +53,7 @@ public class BizarreWizardryMainScreen extends Screen {
     private Button unlockStompButton;
     private Button unlockMagiciansRedButton;
     private Button unlockBloodLettingButton;
+    private Button unlockCrystallineShieldButton;
 
 
     //Buttons to go to a previous screen
@@ -66,6 +68,7 @@ public class BizarreWizardryMainScreen extends Screen {
     private Button selectStompButton;
     private Button selectMagiciansRedButton;
     private Button selectBloodlettingButton;
+    private Button selectCrystallineShieldButton;
 
 
 
@@ -182,6 +185,18 @@ public class BizarreWizardryMainScreen extends Screen {
         this.unlockBloodLettingButton.visible = false;
 
 
+        this.crystallineShieldButton = addRenderableWidget(new ImageButton(this.leftPos + 190, this.topPos + 121,
+                40, 20, 0, 0,
+                1, ScreenVariables.CRYSTALLINE_SHIELD, 40, 20, ScreenButtonHandlers::handleViewSpellButton));
+        this.crystallineShieldButton.active = false;
+        this.crystallineShieldButton.visible = false;
+
+
+        this.unlockCrystallineShieldButton = addRenderableWidget(makeUnlockButton(ScreenButtonHandlers::handleUnlockButton));
+        this.unlockCrystallineShieldButton.active = false;
+        this.unlockCrystallineShieldButton.visible = false;
+
+
         //Button to remove all spells from current spells list
 //        this.resetButton = addRenderableWidget(Button.builder(
 //                RESET_BUTTON,
@@ -217,6 +232,11 @@ public class BizarreWizardryMainScreen extends Screen {
                 .bounds(this.leftPos + 50, this.topPos + 70, 100, 20)
                 .build());
 
+        this.selectCrystallineShieldButton =
+                addRenderableWidget(Button
+                        .builder(ScreenVariables.CRYSTALLINE_SHIELD_SELECTION_BUTTON, ScreenButtonHandlers::handleSelectButton)
+                        .bounds(this.leftPos + 150, this.topPos + 70, 100, 20)
+                        .build());
 
 
 
@@ -243,7 +263,8 @@ public class BizarreWizardryMainScreen extends Screen {
         for (Button button : ScreenVariables.menuButtons)
             ScreenVariables.selectedMenuButtons.put(button, false);
 
-        ScreenVariables.viewSpellButtons = new ImageButton[]{stompButton, magiciansRedButton, bloodlettingButton};
+        ScreenVariables.viewSpellButtons = new ImageButton[]{stompButton, magiciansRedButton, bloodlettingButton,
+                                                            crystallineShieldButton};
         for (Button button : ScreenVariables.viewSpellButtons)
             ScreenVariables.selectedViewSpellButtons.put(button, false);
 
@@ -251,7 +272,8 @@ public class BizarreWizardryMainScreen extends Screen {
         ScreenHelpers.fillRequirements();
 
 
-        ScreenVariables.unlockSpellButtons = new Button[]{unlockStompButton, unlockMagiciansRedButton, unlockBloodLettingButton};
+        ScreenVariables.unlockSpellButtons = new Button[]{unlockStompButton, unlockMagiciansRedButton, unlockBloodLettingButton,
+                                                        unlockCrystallineShieldButton};
         for (Button button : ScreenVariables.unlockSpellButtons)
             ScreenVariables.selectedUnlockSpellButtons.put(button, false);
         for (int i = 0 ; i < ScreenVariables.unlockSpellButtons.length ; ++i)
@@ -262,7 +284,8 @@ public class BizarreWizardryMainScreen extends Screen {
         for (Button button : ScreenVariables.backButtons)
             ScreenVariables.selectedBackButtons.put(button, false);
 
-        ScreenVariables.selectionButtons = new Button[]{selectNoSpellButton, selectStompButton, selectMagiciansRedButton, selectBloodlettingButton};
+        ScreenVariables.selectionButtons = new Button[]{selectNoSpellButton, selectStompButton, selectMagiciansRedButton,
+                                                        selectBloodlettingButton, selectCrystallineShieldButton};
 
         for (int i = 0 ; i < ScreenVariables.selectionButtons.length ; ++i) {
             ScreenVariables.selectedSelectionButtons.put(ScreenVariables.selectionButtons[i], false);
