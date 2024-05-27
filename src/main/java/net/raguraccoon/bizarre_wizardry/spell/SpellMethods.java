@@ -1,6 +1,15 @@
 package net.raguraccoon.bizarre_wizardry.spell;
 
-//Class that has implementation for all spells
+/*
+Class with implementation for each spell
+
+Every spell method must include a WandItem, Level,
+Player, LivingEntity, and UseOnContext. That being
+said, not every method will use all these parameters.
+Each method should check if its relevant parameters are
+null and return immediately if so. The WandItem will
+never be null.
+ */
 
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -12,18 +21,28 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.raguraccoon.bizarre_wizardry.effect.ModEffects;
 import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
 import net.raguraccoon.bizarre_wizardry.entity.magicians_red.MagiciansRed;
+import net.raguraccoon.bizarre_wizardry.item.custom.WandItem;
 
 import java.util.Random;
 
 
 public class SpellMethods {
 
-    public static void burn(Level level, Player player) {
+    public static void noSpell(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
+        //filler
+    }
+
+    public static void burn(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
+
+        if (level == null || player == null)
+            return;
 
         Vec3 lookAngle = player.getLookAngle(); //Used to shoot projectile
 
@@ -36,11 +55,15 @@ public class SpellMethods {
         magiciansRed.shoot(lookAngle.x, lookAngle.y, lookAngle.z, 1f, 0);
         level.addFreshEntity(magiciansRed);
 
-
+        player.getCooldowns().addCooldown(wand, 10);
 
     }
 
-    public static void stomp(Level level, Player player) {
+    public static void stomp(WandItem wand, Level level, Player player, LivingEntity livingEntity, UseOnContext context) {
+
+        if (level == null || player == null)
+            return;
+
 
         AABB playerBoundingBox = player.getBoundingBox();
 
@@ -93,9 +116,16 @@ public class SpellMethods {
                 }
             }
         }
+
+        player.getCooldowns().addCooldown(wand, 50);
+
     }
 
-    public static void bloodletting(Level level, Player player) {
+    public static void bloodletting(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
+
+        if (level == null || player == null)
+            return;
+
 
         //Damage player for 3 hearts
         player.hurt(player.damageSources().generic(), 3);
@@ -107,6 +137,35 @@ public class SpellMethods {
 
         player.addEffect(speed);
         player.addEffect(strength);
+
+        player.getCooldowns().addCooldown(wand, 50);
+
+    }
+
+    public static void crystallineShield(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
+
+        if (level == null || player == null)
+            return;
+
+        MobEffectInstance crystal_shield = new MobEffectInstance(ModEffects.CRYSTALLINE_SHIELD.get(),
+                1000, 0);
+        player.addEffect(crystal_shield);
+
+        player.getCooldowns().addCooldown(wand, 15);
+
+    }
+
+    public static void impact(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
+
+        if (entity == null || player == null)
+            return;
+
+
+        Vec3 playerLookVector = player.getLookAngle();
+        playerLookVector = playerLookVector.scale(3);
+        entity.setDeltaMovement(playerLookVector);
+
+        player.getCooldowns().addCooldown(wand, 10);
 
     }
 }

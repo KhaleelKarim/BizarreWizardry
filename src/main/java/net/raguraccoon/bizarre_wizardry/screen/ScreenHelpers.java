@@ -102,7 +102,7 @@ public class ScreenHelpers {
 
             if (i == -1)
                 return true;
-            else if (!ClientSpellData.SPELLS_LIBRARY[i].unlockable)
+            else if (!ClientSpellData.SPELLS_LIBRARY[i].available)
                 return false;
 
         }

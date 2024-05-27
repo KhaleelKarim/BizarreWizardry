@@ -14,6 +14,7 @@ import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
+import net.raguraccoon.bizarre_wizardry.networking.packet.SetAvailableSpellsC2SPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.ValidateUnlockC2SPacket;
 import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
 import net.raguraccoon.bizarre_wizardry.spell.BizarreSpells;
@@ -48,6 +49,7 @@ public class BizarreWizardryMainScreen extends Screen {
     private ImageButton magiciansRedButton;
     private ImageButton bloodlettingButton;
     private ImageButton crystallineShieldButton;
+    private ImageButton impactButton;
     private ImageButton resetButton;
 
 
@@ -56,6 +58,7 @@ public class BizarreWizardryMainScreen extends Screen {
     private Button unlockMagiciansRedButton;
     private Button unlockBloodLettingButton;
     private Button unlockCrystallineShieldButton;
+    private Button unlockImpactButton;
 
 
     //Buttons to go to a previous screen
@@ -71,6 +74,7 @@ public class BizarreWizardryMainScreen extends Screen {
     private Button selectMagiciansRedButton;
     private Button selectBloodlettingButton;
     private Button selectCrystallineShieldButton;
+    private Button selectImpactButton;
 
 
 
@@ -210,6 +214,20 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
 
+        this.impactButton = addRenderableWidget(new ImageButton(this.leftPos + 260, this.topPos + 121,
+                40, 20, 0, 0,
+                1, BizarreSpells.IMPACT.image, 40, 20, ScreenButtonHandlers::handleViewSpellButton));
+        this.impactButton.active = false;
+        this.impactButton.visible = false;
+        BizarreSpells.IMPACT.setViewButton(this.impactButton);
+
+
+        this.unlockImpactButton = addRenderableWidget(makeUnlockButton(ScreenButtonHandlers::handleUnlockButton));
+        this.unlockImpactButton.active = false;
+        this.unlockImpactButton.visible = false;
+        BizarreSpells.IMPACT.setUnlockButton(this.unlockImpactButton);
+
+
         //Button to remove all spells from current spells list
 //        this.resetButton = addRenderableWidget(Button.builder(
 //                RESET_BUTTON,
@@ -260,6 +278,13 @@ public class BizarreWizardryMainScreen extends Screen {
                         .build());
         BizarreSpells.CRYSTALLINE_SHIELD.setSelectButton(this.selectCrystallineShieldButton);
 
+
+        this.selectImpactButton =
+                addRenderableWidget(Button
+                        .builder(BizarreSpells.IMPACT.buttonName, ScreenButtonHandlers::handleSelectButton)
+                        .bounds(this.leftPos + 250, this.topPos + 70, 100, 20)
+                        .build());
+        BizarreSpells.IMPACT.setSelectButton(this.selectImpactButton);
 
 
 
@@ -380,6 +405,11 @@ public class BizarreWizardryMainScreen extends Screen {
 
             //Clean up spell selection and notoriety screens
             ScreenHelpers.hideChangeButtons();
+            ScreenHelpers.hideBackButtons();
+
+
+            //Update info on available spells
+            ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(0));
 
             //Iterate through all view spell buttons and set them visible/active
             for (int i = 1 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
@@ -417,7 +447,8 @@ public class BizarreWizardryMainScreen extends Screen {
 
             //Clean up other screens
             ScreenHelpers.hideViewButtons();
-
+            ScreenHelpers.hideBackButtons();
+            ScreenHelpers.hideUnlockButtons();
 
             //Display each button to change spells
             //Display current spells
@@ -431,7 +462,7 @@ public class BizarreWizardryMainScreen extends Screen {
                 if (ScreenVariables.selectedChooseButtons.get(ScreenVariables.chooseButtons[i])) {
 
                     //Display the appropriate screen
-                    displaySelectionSpellButtons(graphics, ClientSpellData.SPELL_ARSENAL[i].spellNumber);
+                    displaySelectionSpellButtons(graphics, ClientSpellData.SPELL_ARSENAL[i]);
 
                     //Display back button
                     backToSpellSelection.active = true;
@@ -603,7 +634,7 @@ public class BizarreWizardryMainScreen extends Screen {
     }
 
     //Helper method to view spell selection buttons
-    private void displaySelectionSpellButtons(GuiGraphics graphics, int spellToChange) {
+    private void displaySelectionSpellButtons(GuiGraphics graphics, BizarreSpell bizarreSpell) {
 
         //Hide change spell buttons
         ScreenHelpers.hideChangeButtons();
@@ -633,7 +664,7 @@ public class BizarreWizardryMainScreen extends Screen {
 
         //Display image of spell we are going to change
 
-        ResourceLocation spell = SpellHudOverlay.spellPictures[spellToChange];
+        ResourceLocation spell = bizarreSpell.image;
 
         graphics.blit(spell, this.leftPos + 400, this.topPos + 100, 0, 0, 40, 20, 40, 20);
 

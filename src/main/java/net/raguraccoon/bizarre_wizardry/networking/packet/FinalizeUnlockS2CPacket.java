@@ -47,7 +47,7 @@ public class FinalizeUnlockS2CPacket {
 
             //Set the appropriate boolean to true
             BizarreSpell currentSpell = BizarreSpell.spellFromNumber(spellNumber);
-            currentSpell.unlockable = this.unlockable;
+            currentSpell.setUnlockable(this.unlockable);
 
         });
 

@@ -68,6 +68,7 @@ public class ScreenButtonHandlers {
 
         ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(spellToUnlock));
 
+
         button.active = false;
 
     }

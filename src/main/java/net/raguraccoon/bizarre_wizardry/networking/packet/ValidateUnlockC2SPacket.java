@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.FinalizeUnlockS2CPacket;
+import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
 import net.raguraccoon.bizarre_wizardry.statistics.PlayerStatsGetter;
 
 import java.util.function.Supplier;
@@ -40,33 +41,10 @@ public class ValidateUnlockC2SPacket {
         context.enqueueWork(() -> {
             //Now on the Server
             ServerPlayer player = context.getSender(); //Server player
-            PlayerStatsGetter statsGetter = new PlayerStatsGetter(player); //Object to check player's stats
             boolean spellUnlockable = false; //Is the spell unlockable?
+            BizarreSpell currentSpell = BizarreSpell.spellFromNumber(spellNumber);
 
-
-            //Check for appropriate requirements
-            switch (spellNumber) {
-
-                case 1:
-                    spellUnlockable = statsGetter.unlockedStomp();
-                    break;
-
-                case 2:
-                    spellUnlockable = statsGetter.unlockedMagiciansRed();
-                    break;
-
-                case 3:
-                    spellUnlockable = statsGetter.unlockedBloodletting();
-                    break;
-
-                case 4:
-                    spellUnlockable = statsGetter.unlockedCrystallineShield();
-                    break;
-
-                default:
-                    player.sendSystemMessage(Component.literal("Whoops!"));
-
-            }
+            spellUnlockable = currentSpell.validator.validate(player);
 
             //Update info on client side
             ModMessages.sendToPlayer(new FinalizeUnlockS2CPacket(spellNumber, spellUnlockable), player);

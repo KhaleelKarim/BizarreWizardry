@@ -17,15 +17,17 @@ spell
  */
 public class PlayerStatsGetter {
 
-    private final ServerPlayer player;
 
-    public PlayerStatsGetter(ServerPlayer player) {
-        this.player = player;
+    //Fodder spell method
+    public static boolean unlockedNoSpell(ServerPlayer player) {
+
+        return true;
+
     }
 
 
     //Has player unlocked Stomp?
-    public boolean unlockedStomp() {
+    public static boolean unlockedStomp(ServerPlayer player) {
 
         Stat<?> fallStat = Stats.CUSTOM.get(Stats.FALL_ONE_CM);
         int fallDistance = player.getStats().getValue(fallStat) / 100;
@@ -35,7 +37,7 @@ public class PlayerStatsGetter {
     }
 
     //Has player unlocked Magician's Red?
-    public boolean unlockedMagiciansRed() {
+    public static boolean unlockedMagiciansRed(ServerPlayer player) {
 
         Stat<?> blazeKillsStats = Stats.ENTITY_KILLED.get(EntityType.BLAZE);
         int blazeKills = player.getStats().getValue(blazeKillsStats);
@@ -45,7 +47,7 @@ public class PlayerStatsGetter {
     }
 
     //Has player unlocked Bloodletting?
-    public boolean unlockedBloodletting() {
+    public static boolean unlockedBloodletting(ServerPlayer player) {
 
         Stat<?> spiderEyeEatenStat = Stats.ITEM_USED.get(Items.SPIDER_EYE);
         int spiderEyesEaten = player.getStats().getValue(spiderEyeEatenStat);
@@ -55,7 +57,7 @@ public class PlayerStatsGetter {
     }
 
     //Has the player unlocked Crystalline Shield?
-    public boolean unlockedCrystallineShield() {
+    public static boolean unlockedCrystallineShield(ServerPlayer player) {
 
         Inventory inventory = player.getInventory();
 
@@ -78,6 +80,16 @@ public class PlayerStatsGetter {
         }
 
         return false;
+
+    }
+
+    //Has the player unlocked impact?
+    public static boolean unlockedImpact(ServerPlayer player) {
+
+        Stat<?> creeperKillsStats = Stats.ENTITY_KILLED.get(EntityType.CREEPER);
+        int creeperKills = player.getStats().getValue(creeperKillsStats);
+
+        return creeperKills >= 3;
 
     }
 

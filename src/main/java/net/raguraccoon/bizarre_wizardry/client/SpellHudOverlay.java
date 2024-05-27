@@ -8,27 +8,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.item.ModItems;
+import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
 
 public class SpellHudOverlay {
 
-    public static final ResourceLocation BURN = new ResourceLocation(BizarreWizardry.MOD_ID,
-            "textures/spell/fire_spell.png");
-    public static final ResourceLocation RHINO_STOMP = new ResourceLocation(BizarreWizardry.MOD_ID,
-            "textures/spell/stomp_spell_1.png");
-    public static final ResourceLocation BLOODLETTING = new ResourceLocation(BizarreWizardry.MOD_ID,
-            "textures/spell/bloodletting_spell.png");
-    public static final ResourceLocation CRYSTALLINE_SHIELD = new ResourceLocation(BizarreWizardry.MOD_ID,
-            "textures/spell/crystal_shield_spell_1.png");
-    public static final ResourceLocation OVERGROWTH = new ResourceLocation(BizarreWizardry.MOD_ID,
-            "textures/spell/overgrowth_spell_1.png");
     public static final ResourceLocation NONE = new ResourceLocation(BizarreWizardry.MOD_ID,
             "textures/spell/none_spell.png");
-    public static final ResourceLocation EMPTY_SPELL = new ResourceLocation(BizarreWizardry.MOD_ID,
-            "textures/spell/no_spell.png");
 
-
-    public static final ResourceLocation[] spellPictures = {EMPTY_SPELL, RHINO_STOMP, BURN, BLOODLETTING,
-                                                            CRYSTALLINE_SHIELD};
 
     public static IGuiOverlay HUD_SPELLS = ((forgeGui, guiGraphics, partialTick, width, height) -> {
         int x = width / 2;
@@ -49,28 +35,14 @@ public class SpellHudOverlay {
 
             CompoundTag tag = wand.getTag();
             int spellChoice = tag.getInt("bizarre_wizardry.spell_number");
-            int activeSpell = ClientSpellData.SPELL_ARSENAL[spellChoice].spellNumber;
+            BizarreSpell bizarreSpell = ClientSpellData.SPELL_ARSENAL[spellChoice];
+            ResourceLocation texture = bizarreSpell.image;
 
-            switch(activeSpell) {
-                case 0:
-                    guiGraphics.blit(EMPTY_SPELL, x - 135, y - 21,40, 20, 40, 20, 40, 20);
-                    break;
-                case 1:
-                    guiGraphics.blit(RHINO_STOMP, x - 135, y - 21,40, 20, 40, 20, 40, 20);
-                    break;
-                case 2:
-                    guiGraphics.blit(BURN, x - 135, y - 21,40, 20, 40, 20, 40, 20);
-                    break;
-                case 3:
-                    guiGraphics.blit(BLOODLETTING, x - 135, y - 21,40, 20, 40, 20, 40, 20);
-                    break;
-                case 4:
-                    guiGraphics.blit(CRYSTALLINE_SHIELD, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+            guiGraphics.blit(texture, x - 135, y - 21,40, 20, 40, 20, 40, 20);
 
-                default:
-                    guiGraphics.blit(NONE, x - 135, y - 21,40, 20, 40, 20, 40, 20);
-                    break;
-            }
+        } else {
+            guiGraphics.blit(NONE, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+
         }
     });
 }

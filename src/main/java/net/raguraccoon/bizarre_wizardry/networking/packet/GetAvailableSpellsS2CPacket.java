@@ -12,6 +12,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class GetAvailableSpellsS2CPacket {

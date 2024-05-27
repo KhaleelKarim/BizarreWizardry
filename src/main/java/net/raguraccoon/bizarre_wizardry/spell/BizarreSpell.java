@@ -4,7 +4,13 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
+import net.raguraccoon.bizarre_wizardry.item.custom.WandItem;
 
 
 /*
@@ -38,10 +44,14 @@ public class BizarreSpell {
     public ImageButton viewButton;
     public Button unlockButton;
     public Button selectButton;
+    public final Validator validator;
+    public final Caster caster;
+
 
     public BizarreSpell(int spellNumber, ResourceLocation image, Component buttonName, String[] description,
                         String[] requirements, String trueName, boolean unlockable, int[] dependencies,
-                        boolean available, ImageButton viewButton, Button unlockButton, Button selectButton)
+                        boolean available, ImageButton viewButton, Button unlockButton, Button selectButton,
+                        Validator validator, Caster caster)
     {
 
         this.spellNumber = spellNumber;
@@ -56,6 +66,8 @@ public class BizarreSpell {
         this.viewButton = viewButton;
         this.unlockButton = unlockButton;
         this.selectButton = selectButton;
+        this.validator = validator;
+        this.caster = caster;
 
     }
 
@@ -95,4 +107,17 @@ public class BizarreSpell {
         BizarreSpell spell = (BizarreSpell) obj;
         return this.spellNumber == spell.spellNumber;
     }
+
+
+    //Methods that check whether the server player
+    //has met the requirement for unlocking the spell
+    public interface Validator {
+        boolean validate(ServerPlayer serverPlayer);
+    }
+
+    //Methods that are called when the spell is cast
+    public interface Caster {
+        void cast(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context);
+    }
+
 }

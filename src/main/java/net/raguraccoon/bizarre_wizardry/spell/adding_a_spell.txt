@@ -1,0 +1,16 @@
+Step 1: Create new 40x20 texture (.png file) for the spell and add it to the path
+        resources/assets/bizarre_wizardry/textures/spell
+
+Step 2: Create a component name, spell description, and spell requirements entry all
+        in the en_us.json file.
+
+Step 3: Create a method to validate unlocking the spell in the PlayerStatsGetter class.
+
+Step 4: Create a method to call whenever the spell is cast in the SpellMethods class.
+
+Step 5: Instantiate a new BizarreSpell in the BizarreSpells class.
+
+Step 6: Add the BizarreSpell to SPELLS_LIBRARY in the ClientSpellData class.
+
+Step 7: Add implementation for the view, unlock, and select button in the
+        BizarreWizardryMainScreen class.

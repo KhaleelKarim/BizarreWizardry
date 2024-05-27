@@ -3,6 +3,8 @@ package net.raguraccoon.bizarre_wizardry.client;
 import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
 import net.raguraccoon.bizarre_wizardry.spell.BizarreSpells;
 
+import java.util.Arrays;
+
 public class ClientSpellData {
 
 
@@ -11,7 +13,9 @@ public class ClientSpellData {
 
 
     public static BizarreSpell[] SPELLS_LIBRARY = {BizarreSpells.NO_SPELL, BizarreSpells.STOMP,
-            BizarreSpells.MAGICIANS_RED, BizarreSpells.BLOODLETTING, BizarreSpells.CRYSTALLINE_SHIELD};
+            BizarreSpells.MAGICIANS_RED, BizarreSpells.BLOODLETTING, BizarreSpells.CRYSTALLINE_SHIELD,
+            BizarreSpells.IMPACT
+            };
 
     public static BizarreSpell[] SPELL_ARSENAL = new BizarreSpell[spellCapacity];
 
@@ -42,6 +46,7 @@ public class ClientSpellData {
 
     public static void setAvailableSpells(int[] spells) {
 
+
         for (int i = 1 ; i < SPELLS_LIBRARY.length ; ++i) {
 
             if (spells[i] == 0)
@@ -52,6 +57,7 @@ public class ClientSpellData {
         }
 
     }
+
 
     public static void setCurrentSpells(int[] spells) {
         for (int i = 0 ; i < spells.length ; ++i) {
