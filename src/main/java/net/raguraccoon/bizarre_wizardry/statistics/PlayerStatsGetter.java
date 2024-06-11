@@ -93,5 +93,33 @@ public class PlayerStatsGetter {
 
     }
 
+    //Has the player unlocked fresh fish?
+    public static boolean unlockedFreshFish(ServerPlayer player) {
+
+        Inventory inventory = player.getInventory();
+
+        //Iterate through all inventory slots
+        for (int i = 0 ; i < inventory.getContainerSize() ; ++i) {
+
+            //Get the current item and check if it is pufferfish
+            ItemStack currentItem = inventory.getItem(i);
+            if (currentItem.is(Items.PUFFERFISH)) {
+
+                //If it is puffer, verify it is at least three and then consume it
+                int count = currentItem.getCount();
+
+                if (count >= 3) {
+                    currentItem.shrink(3);
+                    return true;
+                }
+
+            }
+
+        }
+
+        return false;
+
+    }
+
 
 }

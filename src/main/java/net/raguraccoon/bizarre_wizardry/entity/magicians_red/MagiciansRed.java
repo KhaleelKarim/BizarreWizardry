@@ -90,6 +90,8 @@ public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity
         ++this.life;
         if (this.life >= 20) {
             this.remove(RemovalReason.DISCARDED);
+            Level level = level();
+            level.playSound(null, blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundSource.PLAYERS);
         }
 
     }
@@ -107,7 +109,12 @@ public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity
         if (!this.level().isClientSide()) {
 
             super.onHitEntity(entityHitResult);
+            this.remove(RemovalReason.DISCARDED);
+
             Level level = level();
+            BlockPos pos = blockPosition();
+
+            burnArea(level, pos);
 
             //Play fire sound and create effects
             level.playSound(null, entityHitResult.getEntity().blockPosition(), SoundEvents.FIRE_AMBIENT, SoundSource.PLAYERS);
@@ -137,41 +144,48 @@ public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity
             Level level = level();
             BlockPos impactPos = blockHitResult.getBlockPos();
 
-            //Bounding box that contains entities to burn
-            AABB burnables = new AABB(impactPos);
-            burnables = burnables.inflate(2, 2, 2);
-
-            //Create iterable of entities to burn
-            Iterable<Entity> toBurn = level.getEntitiesOfClass(Entity.class, burnables);
-
-
-            //Iterate thru entities to burn em!
-            for (Entity entity : toBurn) {
-
-                if (entity instanceof Player)
-                    continue;
-
-                entity.setSecondsOnFire(3);
-
-            }
-            
-            
-            //Play fire sound and create effects
-            level.playSound(null, blockHitResult.getBlockPos(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS);
-
-            ParticleOptions particleOptions = ParticleTypes.FLAME;
-
-            int x = impactPos.getX();
-            int y = impactPos.getY();
-            int z = impactPos.getZ();
-
-            if (!level.isClientSide()) {
-                ServerLevel serverLevel = (ServerLevel) level;
-                serverLevel.sendParticles(particleOptions, x, y, z, 20, 0, 0, 0, 0.1);
-            }
-
+            burnArea(level, impactPos);
             
         }
 
     }
+
+    //Helper method to burn enemies in an area once hit
+    private static void burnArea(Level level, BlockPos impactPos) {
+
+        //Bounding box that contains entities to burn
+        AABB burnables = new AABB(impactPos);
+        burnables = burnables.inflate(2, 2, 2);
+
+        //Create iterable of entities to burn
+        Iterable<Entity> toBurn = level.getEntitiesOfClass(Entity.class, burnables);
+
+
+        //Iterate thru entities to burn em!
+        for (Entity entity : toBurn) {
+
+            if (entity instanceof Player)
+                continue;
+
+            entity.setSecondsOnFire(3);
+
+        }
+
+
+        //Play fire sound and create effects
+        level.playSound(null, impactPos, SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS);
+
+        ParticleOptions particleOptions = ParticleTypes.FLAME;
+
+        int x = impactPos.getX();
+        int y = impactPos.getY();
+        int z = impactPos.getZ();
+
+        if (!level.isClientSide()) {
+            ServerLevel serverLevel = (ServerLevel) level;
+            serverLevel.sendParticles(particleOptions, x, y, z, 20, 0, 0, 0, 0.1);
+        }
+
+    }
+
 }

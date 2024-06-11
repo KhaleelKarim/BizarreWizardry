@@ -11,6 +11,7 @@ null and return immediately if so. The WandItem will
 never be null.
  */
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -23,8 +24,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.raguraccoon.bizarre_wizardry.effect.ModEffects;
 import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
 import net.raguraccoon.bizarre_wizardry.entity.magicians_red.MagiciansRed;
@@ -134,9 +138,11 @@ public class SpellMethods {
 
         MobEffectInstance speed = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 1);
         MobEffectInstance strength = new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 0);
+        MobEffectInstance nausea = new MobEffectInstance(MobEffects.CONFUSION, 300, 0);
 
         player.addEffect(speed);
         player.addEffect(strength);
+        player.addEffect(nausea);
 
         player.getCooldowns().addCooldown(wand, 50);
 
@@ -151,6 +157,11 @@ public class SpellMethods {
                 1000, 0);
         player.addEffect(crystal_shield);
 
+
+        //Play nice sound effects
+        level.playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_CHAIN, SoundSource.PLAYERS);
+
+
         player.getCooldowns().addCooldown(wand, 15);
 
     }
@@ -163,9 +174,31 @@ public class SpellMethods {
 
         Vec3 playerLookVector = player.getLookAngle();
         playerLookVector = playerLookVector.scale(3);
-        entity.setDeltaMovement(playerLookVector);
+        entity.knockback(4, -1 * playerLookVector.x, -1 * playerLookVector.z);
+
+        Level level1 = Minecraft.getInstance().level;
+        level1.playSound(player, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS);
+
 
         player.getCooldowns().addCooldown(wand, 10);
 
     }
+
+    public static void freshFish(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
+
+        if (level == null || player == null)
+            return;
+
+
+
+        player.getCooldowns().addCooldown(wand, 30);
+
+    }
+
+    private static boolean isOceanBiome(Biome biome) {
+
+        return false;
+
+    }
+
 }

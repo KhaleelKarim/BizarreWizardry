@@ -50,7 +50,7 @@ public class BizarreSpells {
     public static BizarreSpell IMPACT = new BizarreSpell(5,
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/spell/impact_spell.png"),
             Component.translatable("gui." + BizarreWizardry.MOD_ID + ".bizarre_wizardry_home_screen.button.impact_selection_button"),
-            new String[]{"impact_description_line_one"}, new String[]{"effect.bizarre_wizardry.crystalline_shield"},
+            new String[]{"impact_description_line_one"}, new String[]{"impact_requirements_line_one"},
             "Impact", false, new int[]{4}, false, null, null, null,
             PlayerStatsGetter::unlockedImpact, SpellMethods::impact
             );

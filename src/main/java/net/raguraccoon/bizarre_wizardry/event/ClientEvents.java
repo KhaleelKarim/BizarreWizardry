@@ -3,14 +3,14 @@ package net.raguraccoon.bizarre_wizardry.event;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -52,20 +52,25 @@ public class ClientEvents {
             if (event.getEntity() instanceof Player) {
 
                 Player player = (Player) event.getEntity();
-                float damage = event.getAmount();
-
 
                 //Check if player has the effect
                 if (player.hasEffect(ModEffects.CRYSTALLINE_SHIELD.get())) {
 
                     event.setCanceled(true);
                     player.removeEffect(ModEffects.CRYSTALLINE_SHIELD.get());
+                    Level level = Minecraft.getInstance().level;
+                    Player player1 = Minecraft.getInstance().player;
+
+                    level.playSound(player1, player.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS);
+
 
                 }
 
             }
 
         }
+
+
 
     }
     @Mod.EventBusSubscriber(modid = BizarreWizardry.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
