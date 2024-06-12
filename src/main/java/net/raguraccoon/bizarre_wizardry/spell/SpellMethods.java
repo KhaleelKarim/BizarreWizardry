@@ -59,7 +59,7 @@ public class SpellMethods {
         magiciansRed.shoot(lookAngle.x, lookAngle.y, lookAngle.z, 1f, 0);
         level.addFreshEntity(magiciansRed);
 
-        player.getCooldowns().addCooldown(wand, 10);
+        player.getCooldowns().addCooldown(wand, 15);
 
     }
 
@@ -121,7 +121,7 @@ public class SpellMethods {
             }
         }
 
-        player.getCooldowns().addCooldown(wand, 50);
+        player.getCooldowns().addCooldown(wand, 40);
 
     }
 
@@ -144,7 +144,7 @@ public class SpellMethods {
         player.addEffect(strength);
         player.addEffect(nausea);
 
-        player.getCooldowns().addCooldown(wand, 50);
+        player.getCooldowns().addCooldown(wand, 30);
 
     }
 
@@ -162,7 +162,7 @@ public class SpellMethods {
         level.playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_CHAIN, SoundSource.PLAYERS);
 
 
-        player.getCooldowns().addCooldown(wand, 15);
+        player.getCooldowns().addCooldown(wand, 50);
 
     }
 
@@ -180,7 +180,7 @@ public class SpellMethods {
         level1.playSound(player, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS);
 
 
-        player.getCooldowns().addCooldown(wand, 10);
+        player.getCooldowns().addCooldown(wand, 15);
 
     }
 

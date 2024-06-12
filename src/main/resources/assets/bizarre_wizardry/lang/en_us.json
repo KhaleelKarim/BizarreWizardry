@@ -27,12 +27,12 @@
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.put_third_button": "Spell 3",
 
   "stomp_description_line_one": "In a wide area around the player, send mobs flying upwards.",
-  "magicians_red_description_line_one": "Shoot out a fireball that incinerates and pierces mobs.",
+  "magicians_red_description_line_one": "Shoot out a phoenix that incinerates and pierces mobs.",
   "bloodletting_description_line_one": "Sacrifice three hearts for speed and strength boost. The spell will NOT prevent you",
-  "bloodletting_description_line_two": "from killing yourself.",
+  "bloodletting_description_line_two": "from killing yourself. Also comes with nausea",
   "crystalline_shield_description_line_one": "Apply the Crystalline shield effect for 1000 ticks. The next tick of damage",
   "crystalline_shield_description_line_two": "you take is nullified, and the effect is removed.",
-  "impact_description_line_one": "Right-Click a mob to send them flying",
+  "impact_description_line_one": "Right-Click a mob to send them flying in the direction you look",
   "fresh_fish_description_line_one": "Harvest the bounty of nearby water. Boon is dependent on your environment",
 
   "stomp_requirements_line_one": "Must fall from 20 blocks.",
