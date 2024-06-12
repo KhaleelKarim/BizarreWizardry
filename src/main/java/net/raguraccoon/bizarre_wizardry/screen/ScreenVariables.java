@@ -40,9 +40,9 @@ public class ScreenVariables {
 
     //Background textures
     public static final ResourceLocation HOME_SCREEN =
-            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/home_screen.png");
-    public static final ResourceLocation FILLER =
-            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/filler.png");
+            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/landing_screen.png");
+    public static final ResourceLocation BACKGROUND =
+            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/background.png");
     public static final ResourceLocation NOTORIETY_SCREEN =
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/notoriety_screen.png");
 
@@ -63,8 +63,6 @@ public class ScreenVariables {
 
     //List of buttons to view spell unlocking and hashmap
     public static HashMap<Button, Boolean> selectedViewSpellButtons = new HashMap<>();
-    public static HashMap<Button, Integer> spellNumberFromViewButton = new HashMap<>();
-
 
 
     //List of buttons to unlock spells and hashmap

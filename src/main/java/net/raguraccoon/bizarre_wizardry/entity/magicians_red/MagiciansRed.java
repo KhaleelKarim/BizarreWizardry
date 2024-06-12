@@ -3,11 +3,13 @@ package net.raguraccoon.bizarre_wizardry.entity.magicians_red;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,6 +25,8 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.Optional;
 
 public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity {
 
@@ -48,8 +52,9 @@ public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity
     }
 
 
-    public MagiciansRed(EntityType<? extends AbstractHurtingProjectile> entityType, LivingEntity livingEntity, double p_36828_, double p_36829_, double p_36830_, Level level) {
-        super(entityType, livingEntity, p_36828_, p_36829_, p_36830_, level);
+    public MagiciansRed(EntityType<? extends AbstractHurtingProjectile> entityType, Player player, double p_36828_, double p_36829_, double p_36830_, Level level) {
+        this(entityType, player.getX(), player.getEyeY(), player.getZ(), p_36828_, p_36829_, p_36830_, level);
+        setOwner(player);
     }
 
 
@@ -122,6 +127,26 @@ public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity
             Entity entity = entityHitResult.getEntity();
             if (entity instanceof LivingEntity)
                 entity.hurt(entity.damageSources().lava(), 5f);
+
+
+            Entity shooter = getOwner();
+
+            if (shooter instanceof Player playerShooter && entity instanceof LivingEntity livingEntity) {
+
+                if (livingEntity.getHealth() <= 0.0F) {
+
+
+                    playerShooter.sendSystemMessage(Component.literal("Killed em"));
+
+                    playerShooter.awardKillScore(livingEntity,
+                                                 livingEntity.getExperienceReward(),
+                                                 playerShooter.damageSources().lava());
+                    playerShooter.awardStat(Stats.ENTITY_KILLED.get(livingEntity.getType()));
+
+                }
+
+            }
+
 
         }
 

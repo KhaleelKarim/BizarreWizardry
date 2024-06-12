@@ -404,12 +404,17 @@ public class BizarreWizardryMainScreen extends Screen {
         if (renderUniversalScreen) {
 
             //Clean up spell selection and notoriety screens
-            ScreenHelpers.hideChangeButtons();
-            ScreenHelpers.hideBackButtons();
+            ScreenHelpers.hideSpellSelectionScreen();
+            ScreenHelpers.hideNotorietyScreen();
 
 
             //Update info on available spells
             ModMessages.sendToServer(new SetAvailableSpellsC2SPacket(0));
+
+            //Set background
+            RenderSystem.setShaderTexture(0, ScreenVariables.BACKGROUND);
+            graphics.blit(ScreenVariables.BACKGROUND, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 500, 250);
+
 
             //Iterate through all view spell buttons and set them visible/active
             for (int i = 1 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
@@ -446,9 +451,8 @@ public class BizarreWizardryMainScreen extends Screen {
         } else if (renderSpellSelectionScreen) {
 
             //Clean up other screens
-            ScreenHelpers.hideViewButtons();
-            ScreenHelpers.hideBackButtons();
-            ScreenHelpers.hideUnlockButtons();
+            ScreenHelpers.hideUniversalScreen();
+            ScreenHelpers.hideNotorietyScreen();
 
             //Display each button to change spells
             //Display current spells
@@ -479,8 +483,9 @@ public class BizarreWizardryMainScreen extends Screen {
         } else if (renderNotorietyScreen) {
 
             //Clean up
-            ScreenHelpers.hideViewButtons();
-            ScreenHelpers.hideChangeButtons();
+            ScreenHelpers.hideUniversalScreen();
+            ScreenHelpers.hideSpellSelectionScreen();
+
 
             RenderSystem.setShaderTexture(0, ScreenVariables.NOTORIETY_SCREEN);
             graphics.blit(ScreenVariables.NOTORIETY_SCREEN, this.leftPos + 7, this.topPos + 20, 0, 0, 486, 223, 486, 223);
@@ -488,12 +493,11 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
         } else {
-            backToSpellSelection.visible = false;
-            backToSpellSelection.active = false;
 
+            ScreenHelpers.hideUniversalScreen();
+            ScreenHelpers.hideSpellSelectionScreen();
+            ScreenHelpers.hideNotorietyScreen();
 
-            ScreenHelpers.hideChangeButtons();
-            ScreenHelpers.hideSelectionButtons();
         }
 
 
@@ -523,8 +527,8 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
         //Begin by rendering background
-        RenderSystem.setShaderTexture(0, ScreenVariables.FILLER);
-        graphics.blit(ScreenVariables.FILLER, this.leftPos + 7, this.topPos + 20, 0, 0, 486, 223, 486, 223);
+        RenderSystem.setShaderTexture(0, ScreenVariables.BACKGROUND);
+        graphics.blit(ScreenVariables.BACKGROUND, this.leftPos, this.topPos, 0, 0, 500, 250, 500, 250);
 
         //Write the description of the spell
         int descriptionOffset = 23;
@@ -599,8 +603,8 @@ public class BizarreWizardryMainScreen extends Screen {
     private void displaySelectionScreenMenu(GuiGraphics graphics) {
 
         //Hide selection buttons and display background
-        RenderSystem.setShaderTexture(0, ScreenVariables.FILLER);
-        graphics.blit(ScreenVariables.FILLER, this.leftPos + 7, this.topPos + 20, 0, 0, 486, 223, 486, 223);
+        RenderSystem.setShaderTexture(0, ScreenVariables.BACKGROUND);
+        graphics.blit(ScreenVariables.BACKGROUND, this.leftPos, this.topPos, 0, 0, 500, 250, 500, 250);
 
         backToSpellSelection.active = false;
         backToSpellSelection.visible = false;
@@ -640,8 +644,8 @@ public class BizarreWizardryMainScreen extends Screen {
         ScreenHelpers.hideChangeButtons();
 
         //Make filler background
-        RenderSystem.setShaderTexture(0, ScreenVariables.FILLER);
-        graphics.blit(ScreenVariables.FILLER, this.leftPos + 7, this.topPos + 20, 0, 0, 486, 223, 486, 223);
+        RenderSystem.setShaderTexture(0, ScreenVariables.BACKGROUND);
+        graphics.blit(ScreenVariables.BACKGROUND, this.leftPos, this.topPos, 0, 0, 500, 250, 500, 250);
 
         for (int i = 0 ; i < ClientSpellData.SPELLS_LIBRARY.length ; ++i) {
 

@@ -52,7 +52,7 @@ public class SpellMethods {
 
         //Create instance of projectile
         MagiciansRed magiciansRed = new MagiciansRed(ModEntities.MAGICIANS_RED.get(),
-                                        player.getX(), player.getEyeY(), player.getZ(),
+                                        player,
                                         0, 0, 0, level);
 
         //Shoot projectile
@@ -138,7 +138,7 @@ public class SpellMethods {
 
         MobEffectInstance speed = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 1);
         MobEffectInstance strength = new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 0);
-        MobEffectInstance nausea = new MobEffectInstance(MobEffects.CONFUSION, 300, 0);
+        MobEffectInstance nausea = new MobEffectInstance(MobEffects.CONFUSION, 70, 0);
 
         player.addEffect(speed);
         player.addEffect(strength);

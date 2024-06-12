@@ -11,6 +11,28 @@ import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
 
 public class ScreenHelpers {
 
+    public static void hideUniversalScreen() {
+
+        hideViewButtons();
+        hideUnlockButtons();
+        hideBackButtons();
+
+    }
+
+    public static void hideSpellSelectionScreen() {
+
+        hideChangeButtons();
+        hideSelectionButtons();
+        hideBackButtons();
+
+    }
+
+    public static void hideNotorietyScreen() {
+
+
+
+    }
+
 
     //Helper method to hide view spell buttons
     public static void hideViewButtons() {
