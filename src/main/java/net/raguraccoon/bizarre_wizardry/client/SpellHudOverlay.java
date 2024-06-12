@@ -20,7 +20,7 @@ public class SpellHudOverlay {
         int x = width / 2;
         int y = height;
 
-        guiGraphics.blit(NONE, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+        guiGraphics.blit(NONE, x - 135, y - 44,40, 20, 40, 20, 40, 20);
 
         Player player = Minecraft.getInstance().player;
         assert player != null;
@@ -38,10 +38,10 @@ public class SpellHudOverlay {
             BizarreSpell bizarreSpell = ClientSpellData.SPELL_ARSENAL[spellChoice];
             ResourceLocation texture = bizarreSpell.image;
 
-            guiGraphics.blit(texture, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+            guiGraphics.blit(texture, x - 135, y - 44,40, 20, 40, 20, 40, 20);
 
         } else {
-            guiGraphics.blit(NONE, x - 135, y - 21,40, 20, 40, 20, 40, 20);
+            guiGraphics.blit(NONE, x - 135, y - 44,40, 20, 40, 20, 40, 20);
 
         }
     });

@@ -1,12 +1,11 @@
 {
   "item.bizarre_wizardry.wand": "Wand",
-  "item.bizarre_wizardry.stone_of_the_self": "Stone of the Self",
 
   "creativetab.bizarre_tab": "Bizarre Wizardry",
 
   "key.category.bizarre_wizardry.bizarre_category": "Bizarre Wizardry",
   "key.bizarre_wizardry.switch_spell": "Switch Spell",
-  "key.bizarre_wizardry.debug": "Debug",
+  "key.bizarre_wizardry.open": "Open GUI",
 
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen": "Overview",
   "gui.bizarre_wizardry.bizarre_wizardry_home_screen.button.universal_button": "Spells",
@@ -35,7 +34,7 @@
   "impact_description_line_one": "Right-Click a mob to send them flying in the direction you look",
   "fresh_fish_description_line_one": "Harvest the bounty of nearby water. Boon is dependent on your environment",
 
-  "stomp_requirements_line_one": "Must fall from 20 blocks.",
+  "stomp_requirements_line_one": "Must fall from 100 blocks.",
   "magicians_red_requirements_line_one": "Must kill 3 blazes.",
   "bloodletting_requirements_line_one": "Must eat a spider's eye.",
   "crystalline_shield_requirements_line_one": "Must have a stack of glass in your inventory. The glass is not consumed.",

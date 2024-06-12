@@ -3,7 +3,6 @@ package net.raguraccoon.bizarre_wizardry.entity.magicians_red;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
@@ -26,7 +25,6 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import java.util.Optional;
 
 public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity {
 
@@ -134,9 +132,6 @@ public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity
             if (shooter instanceof Player playerShooter && entity instanceof LivingEntity livingEntity) {
 
                 if (livingEntity.getHealth() <= 0.0F) {
-
-
-                    playerShooter.sendSystemMessage(Component.literal("Killed em"));
 
                     playerShooter.awardKillScore(livingEntity,
                                                  livingEntity.getExperienceReward(),

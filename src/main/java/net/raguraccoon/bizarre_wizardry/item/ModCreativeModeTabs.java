@@ -21,7 +21,6 @@ public class ModCreativeModeTabs {
                     .displayItems((pParameters, pOutput) -> {
 
                         pOutput.accept(ModItems.WAND.get());
-                        pOutput.accept(ModItems.STONE_OF_THE_SELF.get());
 
                     })
                     .build());

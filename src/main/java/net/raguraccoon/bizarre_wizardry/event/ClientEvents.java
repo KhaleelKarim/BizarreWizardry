@@ -39,7 +39,7 @@ public class ClientEvents {
                 ModMessages.sendToServer(new SwitchSpellC2SPacket());
             }
 
-            if (KeyBinding.DEBUG_KEY.consumeClick()) {
+            if (KeyBinding.OPEN_GUI_KEY.consumeClick()) {
                 Player player = Minecraft.getInstance().player;
                 DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().setScreen(new BizarreWizardryMainScreen()));
             }
@@ -78,7 +78,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
             event.register(KeyBinding.SWITCH_SPELL_KEY);
-            event.register(KeyBinding.DEBUG_KEY);
+            event.register(KeyBinding.OPEN_GUI_KEY);
         }
 
         @SubscribeEvent
