@@ -11,6 +11,7 @@ null and return immediately if so. The WandItem will
 never be null.
  */
 
+import ca.weblite.objc.Client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -29,10 +30,13 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
+import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.effect.ModEffects;
 import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
 import net.raguraccoon.bizarre_wizardry.entity.magicians_red.MagiciansRed;
 import net.raguraccoon.bizarre_wizardry.item.custom.WandItem;
+import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaLevelC2SPacket;
 
 import java.util.Random;
 
@@ -48,6 +52,13 @@ public class SpellMethods {
         if (level == null || player == null)
             return;
 
+        int manaCost = 100; //How much mana is required to cast spell
+
+        if (manaCost > ClientSpellData.getManaLevel())
+            return;
+
+        ModMessages.sendToServer(new ModifyManaLevelC2SPacket("subtract", manaCost));
+
         Vec3 lookAngle = player.getLookAngle(); //Used to shoot projectile
 
         //Create instance of projectile
@@ -59,7 +70,6 @@ public class SpellMethods {
         magiciansRed.shoot(lookAngle.x, lookAngle.y, lookAngle.z, 1f, 0);
         level.addFreshEntity(magiciansRed);
 
-        player.getCooldowns().addCooldown(wand, 15);
 
     }
 
@@ -68,6 +78,12 @@ public class SpellMethods {
         if (level == null || player == null)
             return;
 
+        int manaCost = 500; //How much mana is required to cast spell
+
+        if (manaCost > ClientSpellData.getManaLevel())
+            return;
+
+        ModMessages.sendToServer(new ModifyManaLevelC2SPacket("subtract", manaCost));
 
         AABB playerBoundingBox = player.getBoundingBox();
 
@@ -121,14 +137,19 @@ public class SpellMethods {
             }
         }
 
-        player.getCooldowns().addCooldown(wand, 40);
-
     }
 
     public static void bloodletting(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
 
         if (level == null || player == null)
             return;
+
+        int manaCost = 50; //How much mana is required to cast spell
+
+        if (manaCost > ClientSpellData.getManaLevel())
+            return;
+
+        ModMessages.sendToServer(new ModifyManaLevelC2SPacket("subtract", manaCost));
 
 
         //Damage player for 3 hearts
@@ -144,14 +165,20 @@ public class SpellMethods {
         player.addEffect(strength);
         player.addEffect(nausea);
 
-        player.getCooldowns().addCooldown(wand, 30);
-
     }
 
     public static void crystallineShield(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
 
         if (level == null || player == null)
             return;
+
+        int manaCost = 1000; //How much mana is required to cast spell
+
+        if (manaCost > ClientSpellData.getManaLevel())
+            return;
+
+        ModMessages.sendToServer(new ModifyManaLevelC2SPacket("subtract", manaCost));
+
 
         MobEffectInstance crystal_shield = new MobEffectInstance(ModEffects.CRYSTALLINE_SHIELD.get(),
                 1000, 0);
@@ -161,9 +188,6 @@ public class SpellMethods {
         //Play nice sound effects
         level.playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_CHAIN, SoundSource.PLAYERS);
 
-
-        player.getCooldowns().addCooldown(wand, 50);
-
     }
 
     public static void impact(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
@@ -171,6 +195,12 @@ public class SpellMethods {
         if (entity == null || player == null)
             return;
 
+        int manaCost = 800; //How much mana is required to cast spell
+
+        if (manaCost > ClientSpellData.getManaLevel())
+            return;
+
+        ModMessages.sendToServer(new ModifyManaLevelC2SPacket("subtract", manaCost));
 
         Vec3 playerLookVector = player.getLookAngle();
         playerLookVector = playerLookVector.scale(3);
@@ -178,9 +208,6 @@ public class SpellMethods {
 
         Level level1 = Minecraft.getInstance().level;
         level1.playSound(player, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS);
-
-
-        player.getCooldowns().addCooldown(wand, 15);
 
     }
 

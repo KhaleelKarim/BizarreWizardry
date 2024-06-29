@@ -22,9 +22,11 @@ import net.raguraccoon.bizarre_wizardry.capability.magical_class.MagicalClass;
 import net.raguraccoon.bizarre_wizardry.capability.magical_class.MagicalClassProvider;
 import net.raguraccoon.bizarre_wizardry.capability.mana.Mana;
 import net.raguraccoon.bizarre_wizardry.capability.mana.ManaProvider;
+import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.available_spells.GetAvailableSpellsS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.current_spells.GetCurrentSpellsS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaLevelC2SPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.mana.UpdateManaInfoS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.spell_capacity.GetSpellCapacityS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.magical_class.SetClassSyncS2CPacket;
@@ -110,7 +112,11 @@ public class ModEvents {
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 
+            if (ClientSpellData.getManaLevel() < ClientSpellData.getManaCap())
+                ModMessages.sendToServer(new ModifyManaLevelC2SPacket("add", ClientSpellData.getManaRate()));
+
         }
+
         @SubscribeEvent
         public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
             if (!event.getLevel().isClientSide()) {

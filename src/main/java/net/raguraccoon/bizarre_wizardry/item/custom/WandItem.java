@@ -47,6 +47,8 @@ public class WandItem extends Item {
                 //Cast appropriate spell
                 currentBizarreSpell.caster.cast(this, level, player, null, null);
 
+                player.getCooldowns().addCooldown(this, 10);
+
             }
 
 
@@ -82,6 +84,8 @@ public class WandItem extends Item {
 
                 //Cast appropriate spell
                 currentBizarreSpell.caster.cast(this, null, player, livingEntity, null);
+                player.getCooldowns().addCooldown(this, 10);
+
 
             }
 
@@ -94,6 +98,7 @@ public class WandItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
+
 
         return super.useOn(context);
     }
