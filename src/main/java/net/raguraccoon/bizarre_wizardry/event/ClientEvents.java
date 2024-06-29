@@ -18,6 +18,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
+import net.raguraccoon.bizarre_wizardry.client.ManaDisplay;
 import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
 import net.raguraccoon.bizarre_wizardry.effect.ModEffects;
 import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
@@ -27,7 +28,6 @@ import net.raguraccoon.bizarre_wizardry.networking.packet.SwitchSpellC2SPacket;
 import net.raguraccoon.bizarre_wizardry.screen.BizarreWizardryMainScreen;
 import net.raguraccoon.bizarre_wizardry.util.KeyBinding;
 
-import java.util.ArrayList;
 
 
 public class ClientEvents {
@@ -84,6 +84,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
             event.registerBelowAll("spell", SpellHudOverlay.HUD_SPELLS);
+            event.registerAboveAll("mana", ManaDisplay.MANA_HUD);
         }
 
         @SubscribeEvent

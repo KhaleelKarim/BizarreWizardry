@@ -12,15 +12,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
-import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
-import net.raguraccoon.bizarre_wizardry.networking.packet.SetAvailableSpellsC2SPacket;
-import net.raguraccoon.bizarre_wizardry.networking.packet.ValidateUnlockC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.available_spells.SetAvailableSpellsC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.unlocks.ValidateUnlockC2SPacket;
 import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
 import net.raguraccoon.bizarre_wizardry.spell.BizarreSpells;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
 
 
 public class BizarreWizardryMainScreen extends Screen {

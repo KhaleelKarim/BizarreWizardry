@@ -3,13 +3,15 @@ package net.raguraccoon.bizarre_wizardry.client;
 import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
 import net.raguraccoon.bizarre_wizardry.spell.BizarreSpells;
 
-import java.util.Arrays;
 
 public class ClientSpellData {
 
 
     private static int magicalClass;
     private static int spellCapacity = 3;
+    private static int manaCap;
+    private static int manaLevel;
+    private static int manaRate;
 
 
     public static BizarreSpell[] SPELLS_LIBRARY = {BizarreSpells.NO_SPELL, BizarreSpells.STOMP,
@@ -68,5 +70,27 @@ public class ClientSpellData {
         }
     }
 
+    public static int getManaCap() {
+        return manaCap;
+    }
 
+    public static void setManaCap(int manaCap) {
+        ClientSpellData.manaCap = manaCap;
+    }
+
+    public static int getManaLevel() {
+        return manaLevel;
+    }
+
+    public static void setManaLevel(int manaLevel) {
+        ClientSpellData.manaLevel = manaLevel;
+    }
+
+    public static int getManaRate() {
+        return manaRate;
+    }
+
+    public static void setManaRate(int manaRate) {
+        ClientSpellData.manaRate = manaRate;
+    }
 }

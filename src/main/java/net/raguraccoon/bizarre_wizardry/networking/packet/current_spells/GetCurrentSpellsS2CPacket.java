@@ -7,7 +7,7 @@ It accepts an array of integers representing the
 player's arsenal.
  */
 
-package net.raguraccoon.bizarre_wizardry.networking.packet;
+package net.raguraccoon.bizarre_wizardry.networking.packet.current_spells;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;

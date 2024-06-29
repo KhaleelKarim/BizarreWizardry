@@ -3,8 +3,8 @@ package net.raguraccoon.bizarre_wizardry.screen;
 import net.minecraft.client.gui.components.Button;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
-import net.raguraccoon.bizarre_wizardry.networking.packet.SetAvailableSpellsC2SPacket;
-import net.raguraccoon.bizarre_wizardry.networking.packet.SetCurrentSpellsC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.available_spells.SetAvailableSpellsC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.current_spells.SetCurrentSpellsC2SPacket;
 
 public class ScreenButtonHandlers {
 

@@ -8,6 +8,20 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.networking.packet.*;
+import net.raguraccoon.bizarre_wizardry.networking.packet.available_spells.GetAvailableSpellsS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.available_spells.SetAvailableSpellsC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.current_spells.GetCurrentSpellsS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.current_spells.SetCurrentSpellsC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.magical_class.ChooseClassC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.magical_class.SetClassSyncS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaCapacityC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaLevelC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaRateC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana.UpdateManaInfoS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.spell_capacity.GetSpellCapacityS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.spell_capacity.SetSpellCapacityC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.unlocks.FinalizeUnlockS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.unlocks.ValidateUnlockC2SPacket;
 
 public class ModMessages {
     private static SimpleChannel INSTANCE;
@@ -104,6 +118,33 @@ public class ModMessages {
                 .decoder(FinalizeUnlockS2CPacket::new)
                 .encoder(FinalizeUnlockS2CPacket::encode)
                 .consumerMainThread(FinalizeUnlockS2CPacket::handle)
+                .add();
+
+
+
+        //Packets dealing with various aspects of mana
+        net.messageBuilder(ModifyManaCapacityC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ModifyManaCapacityC2SPacket::new)
+                .encoder(ModifyManaCapacityC2SPacket::encode)
+                .consumerMainThread(ModifyManaCapacityC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ModifyManaLevelC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ModifyManaLevelC2SPacket::new)
+                .encoder(ModifyManaLevelC2SPacket::encode)
+                .consumerMainThread(ModifyManaLevelC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ModifyManaRateC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ModifyManaRateC2SPacket::new)
+                .encoder(ModifyManaRateC2SPacket::encode)
+                .consumerMainThread(ModifyManaRateC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(UpdateManaInfoS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateManaInfoS2CPacket::new)
+                .encoder(UpdateManaInfoS2CPacket::encode)
+                .consumerMainThread(UpdateManaInfoS2CPacket::handle)
                 .add();
 
 

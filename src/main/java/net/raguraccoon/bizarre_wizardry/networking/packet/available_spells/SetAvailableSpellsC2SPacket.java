@@ -6,7 +6,7 @@ The constructor accepts an integer corresponding
 to the BizarreSpell that will become available
  */
 
-package net.raguraccoon.bizarre_wizardry.networking.packet;
+package net.raguraccoon.bizarre_wizardry.networking.packet.available_spells;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

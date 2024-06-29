@@ -1,4 +1,4 @@
-package net.raguraccoon.bizarre_wizardry.networking.packet;
+package net.raguraccoon.bizarre_wizardry.networking.packet.magical_class;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

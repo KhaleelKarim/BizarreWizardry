@@ -10,14 +10,13 @@ The second integer is the position in the player's
 arsenal that the spell will be placed.
  */
 
-package net.raguraccoon.bizarre_wizardry.networking.packet;
+package net.raguraccoon.bizarre_wizardry.networking.packet.current_spells;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.raguraccoon.bizarre_wizardry.capability.current_spells.CurrentSpellsProvider;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
-import net.raguraccoon.bizarre_wizardry.networking.packet.GetCurrentSpellsS2CPacket;
 
 import java.util.function.Supplier;
 

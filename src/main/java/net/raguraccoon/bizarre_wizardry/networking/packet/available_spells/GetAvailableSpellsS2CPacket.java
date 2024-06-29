@@ -6,7 +6,7 @@ The constructor accepts an integer array representing
 available spells.
  */
 
-package net.raguraccoon.bizarre_wizardry.networking.packet;
+package net.raguraccoon.bizarre_wizardry.networking.packet.available_spells;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;

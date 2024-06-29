@@ -9,7 +9,7 @@ indicating the unlockable status that will be placed
 into the BizarreSpell.
  */
 
-package net.raguraccoon.bizarre_wizardry.networking.packet;
+package net.raguraccoon.bizarre_wizardry.networking.packet.unlocks;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;

@@ -20,11 +20,14 @@ import net.raguraccoon.bizarre_wizardry.capability.current_spells.CurrentSpells;
 import net.raguraccoon.bizarre_wizardry.capability.current_spells.CurrentSpellsProvider;
 import net.raguraccoon.bizarre_wizardry.capability.magical_class.MagicalClass;
 import net.raguraccoon.bizarre_wizardry.capability.magical_class.MagicalClassProvider;
+import net.raguraccoon.bizarre_wizardry.capability.mana.Mana;
+import net.raguraccoon.bizarre_wizardry.capability.mana.ManaProvider;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
-import net.raguraccoon.bizarre_wizardry.networking.packet.GetAvailableSpellsS2CPacket;
-import net.raguraccoon.bizarre_wizardry.networking.packet.GetCurrentSpellsS2CPacket;
-import net.raguraccoon.bizarre_wizardry.networking.packet.GetSpellCapacityS2CPacket;
-import net.raguraccoon.bizarre_wizardry.networking.packet.SetClassSyncS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.available_spells.GetAvailableSpellsS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.current_spells.GetCurrentSpellsS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana.UpdateManaInfoS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.spell_capacity.GetSpellCapacityS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.magical_class.SetClassSyncS2CPacket;
 import net.raguraccoon.bizarre_wizardry.spell_capacity.SpellCapacity;
 import net.raguraccoon.bizarre_wizardry.spell_capacity.SpellCapacityProvider;
 
@@ -45,6 +48,7 @@ public class ModEvents {
                     event.addCapability(new ResourceLocation(BizarreWizardry.MOD_ID, "bizarre_wizardry.spell_capacity_property"), new SpellCapacityProvider());
                     event.addCapability(new ResourceLocation(BizarreWizardry.MOD_ID, "bizarre_wizardry.available_spells_property"), new AvailableSpellsProvider());
                     event.addCapability(new ResourceLocation(BizarreWizardry.MOD_ID, "bizarre_wizardry.current_spells_property"), new CurrentSpellsProvider());
+                    event.addCapability(new ResourceLocation(BizarreWizardry.MOD_ID, "bizarre_wizardry.mana_property"), new ManaProvider());
 
                 }
             }
@@ -53,6 +57,7 @@ public class ModEvents {
         @SubscribeEvent
         public static void onPlayerCloned(PlayerEvent.Clone event) {
             if (event.isWasDeath()) {
+
                 event.getOriginal().reviveCaps();
                 //Restores magical class
                 event.getOriginal().getCapability(MagicalClassProvider.MAGICAL_CLASS).ifPresent(oldStore -> {
@@ -82,6 +87,13 @@ public class ModEvents {
                     });
                 });
 
+                //Restores mana
+                event.getOriginal().getCapability(ManaProvider.MANA).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(ManaProvider.MANA).ifPresent(newStore -> {
+                        newStore.copyFrom(oldStore);
+                    });
+                });
+
                 event.getOriginal().invalidateCaps();
             }
         }
@@ -92,6 +104,7 @@ public class ModEvents {
             event.register(SpellCapacity.class);
             event.register(AvailableSpells.class);
             event.register(CurrentSpells.class);
+            event.register(Mana.class);
         }
 
         @SubscribeEvent
@@ -120,6 +133,12 @@ public class ModEvents {
                     //For current spells
                     player.getCapability(CurrentSpellsProvider.CURRENT_SPELLS).ifPresent(currentSpells -> {
                         ModMessages.sendToPlayer(new GetCurrentSpellsS2CPacket(currentSpells.getCurrentSpells()), player);
+                    });
+
+                    //For mana
+                    player.getCapability(ManaProvider.MANA).ifPresent(mana -> {
+                        ModMessages.sendToPlayer(new UpdateManaInfoS2CPacket(new int[]{mana.getManaCapacity(),
+                                mana.getManaLevel(), mana.getManaRegenRate()}), player);
                     });
 
                 }

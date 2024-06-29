@@ -7,16 +7,13 @@ The packet accepts an integer corresponding to the
 BizarreSpell that is being checked.
  */
 
-package net.raguraccoon.bizarre_wizardry.networking.packet;
+package net.raguraccoon.bizarre_wizardry.networking.packet.unlocks;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
-import net.raguraccoon.bizarre_wizardry.networking.packet.FinalizeUnlockS2CPacket;
 import net.raguraccoon.bizarre_wizardry.spell.BizarreSpell;
-import net.raguraccoon.bizarre_wizardry.statistics.PlayerStatsGetter;
 
 import java.util.function.Supplier;
 
