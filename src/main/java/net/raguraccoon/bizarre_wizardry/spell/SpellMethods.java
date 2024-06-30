@@ -11,7 +11,6 @@ null and return immediately if so. The WandItem will
 never be null.
  */
 
-import ca.weblite.objc.Client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,17 +25,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.effect.ModEffects;
 import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
 import net.raguraccoon.bizarre_wizardry.entity.magicians_red.MagiciansRed;
 import net.raguraccoon.bizarre_wizardry.item.custom.WandItem;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaCapacityC2SPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaLevelC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana_spill.ModifyManaSpillC2SPacket;
 
 import java.util.Random;
 
@@ -52,7 +51,8 @@ public class SpellMethods {
         if (level == null || player == null)
             return;
 
-        int manaCost = 100; //How much mana is required to cast spell
+        int manaCost = 100;   //How much mana is required to cast spell
+        int manaToSpill = 10; //How much mana will spill
 
         if (manaCost > ClientSpellData.getManaLevel())
             return;
@@ -70,6 +70,8 @@ public class SpellMethods {
         magiciansRed.shoot(lookAngle.x, lookAngle.y, lookAngle.z, 1f, 0);
         level.addFreshEntity(magiciansRed);
 
+        //Spill the mana
+        ModMessages.sendToServer(new ModifyManaSpillC2SPacket("add", manaToSpill));
 
     }
 
@@ -79,6 +81,7 @@ public class SpellMethods {
             return;
 
         int manaCost = 500; //How much mana is required to cast spell
+        int manaToSpill = 10; //How much mana will spill
 
         if (manaCost > ClientSpellData.getManaLevel())
             return;
@@ -137,6 +140,9 @@ public class SpellMethods {
             }
         }
 
+        //Spill the mana
+        ModMessages.sendToServer(new ModifyManaSpillC2SPacket("add", manaToSpill));
+
     }
 
     public static void bloodletting(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
@@ -145,6 +151,7 @@ public class SpellMethods {
             return;
 
         int manaCost = 50; //How much mana is required to cast spell
+        int manaToSpill = 10; //How much mana will spill
 
         if (manaCost > ClientSpellData.getManaLevel())
             return;
@@ -165,6 +172,9 @@ public class SpellMethods {
         player.addEffect(strength);
         player.addEffect(nausea);
 
+        //Spill the mana
+        ModMessages.sendToServer(new ModifyManaSpillC2SPacket("add", manaToSpill));
+
     }
 
     public static void crystallineShield(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
@@ -173,6 +183,7 @@ public class SpellMethods {
             return;
 
         int manaCost = 1000; //How much mana is required to cast spell
+        int manaToSpill = 10; //How much mana will spill
 
         if (manaCost > ClientSpellData.getManaLevel())
             return;
@@ -188,6 +199,9 @@ public class SpellMethods {
         //Play nice sound effects
         level.playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_CHAIN, SoundSource.PLAYERS);
 
+        //Spill the mana
+        ModMessages.sendToServer(new ModifyManaSpillC2SPacket("add", manaToSpill));
+
     }
 
     public static void impact(WandItem wand, Level level, Player player, LivingEntity entity, UseOnContext context) {
@@ -196,6 +210,7 @@ public class SpellMethods {
             return;
 
         int manaCost = 800; //How much mana is required to cast spell
+        int manaToSpill = 10; //How much mana will spill
 
         if (manaCost > ClientSpellData.getManaLevel())
             return;
@@ -208,6 +223,9 @@ public class SpellMethods {
 
         Level level1 = Minecraft.getInstance().level;
         level1.playSound(player, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS);
+
+        //Spill the mana
+        ModMessages.sendToServer(new ModifyManaSpillC2SPacket("add", manaToSpill));
 
     }
 

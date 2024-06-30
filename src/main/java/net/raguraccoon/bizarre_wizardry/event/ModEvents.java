@@ -9,6 +9,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,12 +23,15 @@ import net.raguraccoon.bizarre_wizardry.capability.magical_class.MagicalClass;
 import net.raguraccoon.bizarre_wizardry.capability.magical_class.MagicalClassProvider;
 import net.raguraccoon.bizarre_wizardry.capability.mana.Mana;
 import net.raguraccoon.bizarre_wizardry.capability.mana.ManaProvider;
+import net.raguraccoon.bizarre_wizardry.capability.mana_spill.ManaSpill;
+import net.raguraccoon.bizarre_wizardry.capability.mana_spill.ManaSpillProvider;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.available_spells.GetAvailableSpellsS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.current_spells.GetCurrentSpellsS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaLevelC2SPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.mana.UpdateManaInfoS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana_spill.UpdateManaSpillS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.spell_capacity.GetSpellCapacityS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.magical_class.SetClassSyncS2CPacket;
 import net.raguraccoon.bizarre_wizardry.spell_capacity.SpellCapacity;
@@ -51,6 +55,7 @@ public class ModEvents {
                     event.addCapability(new ResourceLocation(BizarreWizardry.MOD_ID, "bizarre_wizardry.available_spells_property"), new AvailableSpellsProvider());
                     event.addCapability(new ResourceLocation(BizarreWizardry.MOD_ID, "bizarre_wizardry.current_spells_property"), new CurrentSpellsProvider());
                     event.addCapability(new ResourceLocation(BizarreWizardry.MOD_ID, "bizarre_wizardry.mana_property"), new ManaProvider());
+                    event.addCapability(new ResourceLocation(BizarreWizardry.MOD_ID, "bizarre_wizardry.mana_spill_property"), new ManaSpillProvider());
 
                 }
             }
@@ -96,6 +101,13 @@ public class ModEvents {
                     });
                 });
 
+                //Restores mana spill
+                event.getOriginal().getCapability(ManaSpillProvider.MANA_SPILL).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(ManaSpillProvider.MANA_SPILL).ifPresent(newStore -> {
+                        newStore.copyFrom(oldStore);
+                    });
+                });
+
                 event.getOriginal().invalidateCaps();
             }
         }
@@ -107,6 +119,7 @@ public class ModEvents {
             event.register(AvailableSpells.class);
             event.register(CurrentSpells.class);
             event.register(Mana.class);
+            event.register(ManaSpill.class);
         }
 
         @SubscribeEvent
@@ -147,9 +160,20 @@ public class ModEvents {
                                 mana.getManaLevel(), mana.getManaRegenRate()}), player);
                     });
 
+                    //For mana spill
+                    player.getCapability(ManaSpillProvider.MANA_SPILL).ifPresent(manaSpill -> {
+                        ModMessages.sendToPlayer(new UpdateManaSpillS2CPacket(manaSpill.getManaSpill()), player);
+                    });
+
                 }
             }
         }
+
+        @SubscribeEvent
+        public static void onEntityDeath(LivingDeathEvent event) {
+
+        }
+
     }
 
     @Mod.EventBusSubscriber(modid = BizarreWizardry.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)

@@ -57,6 +57,13 @@ public class ScreenVariables {
             new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/hard_lock.png");
 
 
+    //Mana Spill textures
+    public static final ResourceLocation MANA_SPILL_BAR =
+            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/mana_spill_bar.png");
+    public static final ResourceLocation MANA_SPILL_BAR_BORDER =
+            new ResourceLocation(BizarreWizardry.MOD_ID, "textures/gui/mana_spill_bar_border.png");
+
+
     //List of menu buttons and hashmap to tell if it is selected
     public static Button[] menuButtons;
     public static HashMap<Button, Boolean> selectedMenuButtons = new HashMap<>();

@@ -6,12 +6,14 @@ import net.raguraccoon.bizarre_wizardry.spell.BizarreSpells;
 
 public class ClientSpellData {
 
+    public static final int manaSpillCap = 1000;
 
     private static int magicalClass;
     private static int spellCapacity = 3;
     private static int manaCap;
     private static int manaLevel;
     private static int manaRate;
+    private static int manaSpill;
 
 
     public static BizarreSpell[] SPELLS_LIBRARY = {BizarreSpells.NO_SPELL, BizarreSpells.STOMP,
@@ -92,5 +94,13 @@ public class ClientSpellData {
 
     public static void setManaRate(int manaRate) {
         ClientSpellData.manaRate = manaRate;
+    }
+
+    public static int getManaSpill() {
+        return manaSpill;
+    }
+
+    public static void setManaSpill(int manaSpill) {
+        ClientSpellData.manaSpill = manaSpill;
     }
 }

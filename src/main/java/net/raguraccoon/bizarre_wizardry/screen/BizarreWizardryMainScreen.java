@@ -375,8 +375,6 @@ public class BizarreWizardryMainScreen extends Screen {
 
 
 
-
-
     //Renders background and sets buttons to invisible when appropriate
     //This method is called after init
     @Override
@@ -484,9 +482,7 @@ public class BizarreWizardryMainScreen extends Screen {
             ScreenHelpers.hideSpellSelectionScreen();
 
 
-            RenderSystem.setShaderTexture(0, ScreenVariables.NOTORIETY_SCREEN);
-            graphics.blit(ScreenVariables.NOTORIETY_SCREEN, this.leftPos + 7, this.topPos + 20, 0, 0, 486, 223, 486, 223);
-
+            displayManaSpillScreen(graphics);
 
 
         } else {
@@ -501,7 +497,6 @@ public class BizarreWizardryMainScreen extends Screen {
 
         super.render(graphics, mouseX, mouseY, partialTicks);
     }
-
 
 
 
@@ -669,6 +664,30 @@ public class BizarreWizardryMainScreen extends Screen {
 
         graphics.blit(spell, this.leftPos + 400, this.topPos + 100, 0, 0, 40, 20, 40, 20);
 
+
+    }
+
+    //Helper method to display mana spill screen
+    private void displayManaSpillScreen(GuiGraphics graphics) {
+
+        double barPercent = (double) ClientSpellData.getManaSpill() / ClientSpellData.manaSpillCap;
+        int barPortion = (int) (440 * barPercent);
+
+        //Display background
+        RenderSystem.setShaderTexture(0, ScreenVariables.BACKGROUND);
+        graphics.blit(ScreenVariables.BACKGROUND, this.leftPos, this.topPos, 0, 0, 500, 250, 500, 250);
+
+
+        //Render border and bar
+        RenderSystem.setShaderTexture(0, ScreenVariables.MANA_SPILL_BAR_BORDER);
+        graphics.blit(ScreenVariables.MANA_SPILL_BAR_BORDER, leftPos + 28, topPos + 50,
+                0, 0,
+                444, 19, 444, 19);
+
+        RenderSystem.setShaderTexture(0, ScreenVariables.MANA_SPILL_BAR);
+        graphics.blit(ScreenVariables.MANA_SPILL_BAR, leftPos + 30, topPos + 52,
+                0, 0,
+                barPortion, 15, 440, 15);
 
     }
 

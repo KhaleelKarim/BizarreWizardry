@@ -18,6 +18,8 @@ import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaCapacit
 import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaLevelC2SPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.mana.ModifyManaRateC2SPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.mana.UpdateManaInfoS2CPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana_spill.ModifyManaSpillC2SPacket;
+import net.raguraccoon.bizarre_wizardry.networking.packet.mana_spill.UpdateManaSpillS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.spell_capacity.GetSpellCapacityS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.spell_capacity.SetSpellCapacityC2SPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.unlocks.FinalizeUnlockS2CPacket;
@@ -145,6 +147,20 @@ public class ModMessages {
                 .decoder(UpdateManaInfoS2CPacket::new)
                 .encoder(UpdateManaInfoS2CPacket::encode)
                 .consumerMainThread(UpdateManaInfoS2CPacket::handle)
+                .add();
+
+
+        //Packets dealing with mana spill
+        net.messageBuilder(ModifyManaSpillC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ModifyManaSpillC2SPacket::new)
+                .encoder(ModifyManaSpillC2SPacket::encode)
+                .consumerMainThread(ModifyManaSpillC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(UpdateManaSpillS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateManaSpillS2CPacket::new)
+                .encoder(UpdateManaSpillS2CPacket::encode)
+                .consumerMainThread(UpdateManaSpillS2CPacket::handle)
                 .add();
 
 
