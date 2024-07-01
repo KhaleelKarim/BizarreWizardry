@@ -9,5 +9,4 @@ public class MagiciansRedRenderer extends GeoEntityRenderer<MagiciansRed> {
         super(renderManager, new MagiciansRedModel());
     }
 
-
 }

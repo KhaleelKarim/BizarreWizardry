@@ -23,6 +23,7 @@ import net.raguraccoon.bizarre_wizardry.client.SpellHudOverlay;
 import net.raguraccoon.bizarre_wizardry.effect.ModEffects;
 import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
 import net.raguraccoon.bizarre_wizardry.entity.magicians_red.MagiciansRedRenderer;
+import net.raguraccoon.bizarre_wizardry.entity.mana_reaper.ManaReaperRenderer;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.SwitchSpellC2SPacket;
 import net.raguraccoon.bizarre_wizardry.screen.BizarreWizardryMainScreen;
@@ -90,6 +91,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(ModEntities.MAGICIANS_RED.get(), MagiciansRedRenderer::new);
+            event.registerEntityRenderer(ModEntities.MANA_REAPER.get(), ManaReaperRenderer::new);
         }
 
         @SubscribeEvent
@@ -103,6 +105,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.MAGICIANS_RED.get(), MagiciansRedRenderer::new);
+            EntityRenderers.register(ModEntities.MANA_REAPER.get(), ManaReaperRenderer::new);
         }
     }
 

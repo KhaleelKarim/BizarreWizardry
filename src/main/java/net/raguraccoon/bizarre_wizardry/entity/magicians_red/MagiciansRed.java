@@ -36,7 +36,8 @@ public class MagiciansRed extends AbstractHurtingProjectile implements GeoEntity
 
 
     //Idle Animation
-    protected static final RawAnimation IDLE_ANIMATION = RawAnimation.begin().thenLoop("phoenix_idle");
+    protected static final RawAnimation IDLE_ANIMATION =
+            RawAnimation.begin().thenLoop("phoenix_idle");
 
 
     //3 Constructors!

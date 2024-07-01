@@ -26,6 +26,8 @@ import net.raguraccoon.bizarre_wizardry.capability.mana.ManaProvider;
 import net.raguraccoon.bizarre_wizardry.capability.mana_spill.ManaSpill;
 import net.raguraccoon.bizarre_wizardry.capability.mana_spill.ManaSpillProvider;
 import net.raguraccoon.bizarre_wizardry.client.ClientSpellData;
+import net.raguraccoon.bizarre_wizardry.entity.ModEntities;
+import net.raguraccoon.bizarre_wizardry.entity.mana_reaper.ManaReaper;
 import net.raguraccoon.bizarre_wizardry.networking.ModMessages;
 import net.raguraccoon.bizarre_wizardry.networking.packet.available_spells.GetAvailableSpellsS2CPacket;
 import net.raguraccoon.bizarre_wizardry.networking.packet.current_spells.GetCurrentSpellsS2CPacket;
@@ -181,7 +183,7 @@ public class ModEvents {
 
         @SubscribeEvent
         public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
-
+            event.put(ModEntities.MANA_REAPER.get(), ManaReaper.setAttributes());
         }
     }
 }

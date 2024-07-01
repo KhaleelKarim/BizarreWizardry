@@ -8,11 +8,10 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.raguraccoon.bizarre_wizardry.BizarreWizardry;
 import net.raguraccoon.bizarre_wizardry.util.KMath;
-import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.model.data.EntityModelData;
+
 
 public class MagiciansRedModel extends GeoModel<MagiciansRed> {
 
